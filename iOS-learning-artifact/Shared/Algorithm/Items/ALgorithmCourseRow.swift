@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ALgorithmCourseRow: View {
     var item: AlgorithmCourseSection = alCourseSections[0]
+//    let questions = Bundle.main.decode(QuestionResponse.self, from: "questions.json").data.statStatusPairs[0]
+//    var questionItem : StatStatusPair = Bundle.main.decode(QuestionResponse.self, from: "questions.json").data.statStatusPairs[0]
     
     var body: some View {
         HStack(alignment: .top) {
@@ -19,10 +21,10 @@ struct ALgorithmCourseRow: View {
                 .background(item.color)
                 .clipShape(Circle())
             VStack(alignment: .leading, spacing: 4.0) {
-                Text(item.title)
-                    .font(.subheadline)
-                    .bold()
-                    .foregroundColor(.primary)
+//                Text(questionItem.stat.questionTitle)
+//                    .font(.subheadline)
+//                    .bold()
+//                    .foregroundColor(.primary)
                 Text(item.subtitle)
                     .font(.footnote)
                     .foregroundColor(.secondary)
