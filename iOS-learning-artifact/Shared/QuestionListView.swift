@@ -15,7 +15,7 @@ struct QuestionListView: View {
                 ForEach(questionItems){ questionItem in
                     
                     NavigationLink(
-                        destination: QuestionDetail(titleSlug:questionItem.questionslug)){
+                        destination: QuestionDetail(titleSlug:questionItem.questionslug!)){
                         QuestionRow(questionItem: questionItem)
                     }
                     
