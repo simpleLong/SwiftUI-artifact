@@ -77,3 +77,9 @@ var alCourseSections = [
         color: Color(#colorLiteral(red: 0.9505215287, green: 0.0005362218362, blue: 0.5361744165, alpha: 1))
     ),
 ]
+
+struct AlgorithmCourseSection_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
