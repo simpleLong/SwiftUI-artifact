@@ -12,79 +12,88 @@ struct HomeView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var active = false
     @State var activeIndex = -1
+    @State var activeView = CGSize.zero
     var body: some View {
-
+        
         NavigationView{
-
-                    GeometryReader { bounds in
-                        ScrollView {
-                            VStack {
-                                ScrollView(.horizontal, showsIndicators: false){
-                                    HStack(spacing: 20) {
-                                        ForEach(questionStore.sections) { item in
-                                            GeometryReader { geometry in
-                                                SectionView(section: item)
-                                                    .rotation3DEffect(Angle(degrees:
-                                                                                Double(geometry.frame(in: .global).minX - 30) / -getAngleMultiplier(bounds: bounds)
-                                                    ), axis: (x: 0, y: 10, z: 0))
-                                            }
-                                            .frame(width: 275, height: 275)
-                                        }
+            
+            GeometryReader { bounds in
+                ScrollView {
+                    VStack {
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack(spacing: 20) {
+                                ForEach(questionStore.sections) { item in
+                                    GeometryReader { geometry in
+                                        SectionView(section: item)
+                                            .rotation3DEffect(Angle(degrees:
+                                                                        Double(geometry.frame(in: .global).minX - 30) / -getAngleMultiplier(bounds: bounds)
+                                            ), axis: (x: 0, y: 10, z: 0))
                                     }
-                                    .padding(30)
-                                    .padding(.bottom, 30)
+                                    .frame(width: 275, height: 275)
                                 }
-                                .offset(y: -30)
-                               // .blur(radius: self.active ? 20 : 0)
-                                
-                                HStack {
-                                    Text("Courses")
-                                        .font(.title).bold()
-                                    Spacer()
+                            }
+                            .padding(30)
+                            .padding(.bottom, 30)
+                        }
+                        .offset(y: -30)
+                        // .blur(radius: self.active ? 20 : 0)
+                        
+                        HStack {
+                            Text("Courses")
+                                .font(.title).bold()
+                            Spacer()
+                        }
+                        .offset(y: -50)
+                        
+                        VStack(spacing: 30) {
+                            ForEach(questionStore.sections.indices, id: \.self) { index in
+                                GeometryReader { geometry in
+                                    
+                                    AlgorithmCourseView(course: questionStore.sections[index], show: self.$questionStore.sections[index].show,
+                                                        active: $active,
+                                                        activeIndex: $activeIndex,
+                                                        activeView: $activeView,
+                                                        index: index,
+                                                        questionItems: getTheSectionQuestions(questionStore.questions, self.questionStore.sections[index]))
+                                        .offset(y: self.questionStore.sections[index].show ? -geometry.frame(in: .global).minY : 0)
+                                        .opacity(self.activeIndex != index && self.active ? 0 : 1)
+                                        .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
+                                        .offset(x: self.activeIndex != index && self.active ? bounds.size.width : 0)
+                                    
+                                    
+                                    
                                 }
-                                .offset(y: -50)
-                                
-                                VStack(spacing: 30) {
-                                    ForEach(questionStore.sections.indices, id: \.self) { index in
-                                        GeometryReader { geometry in
-
-                                        AlgorithmCourseView(course: questionStore.sections[index] ,show: false)                                        .offset(y: self.questionStore.sections[index].show ? -geometry.frame(in: .global).minY : 0)
-                                                .opacity(self.activeIndex != index && self.active ? 0 : 1)
-                                                .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
-                                                .offset(x: self.activeIndex != index && self.active ? bounds.size.width : 0)
-
-
-
-                                        }
-                                        .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
-                                        .frame(maxWidth: self.questionStore.sections[index].show ? 712 : getCardWidth(bounds: bounds))
-                                        .zIndex(self.questionStore.sections[index].show ? 1 : 0)
-                                    }
-                                }
-                                .padding(.bottom, 300)
-                                .offset(y: -60)
-
+                                .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
+                                .frame(maxWidth: self.questionStore.sections[index].show ? 712 : getCardWidth(bounds: bounds))
+                                .zIndex(self.questionStore.sections[index].show ? 1 : 0)
                             }
                         }
-
-
+                        .padding(.bottom, 300)
+                        .offset(y: -60)
+                        
                     }
-//                    List{
-//                        ForEach(questionStore.sections) { section in
-//                            NavigationLink(
-//                                destination: Text("Destination"),
-//                                label: {
-//                                    AlgorithmCourseView(course: section ,show: false)
-//                                })
-//
-//                        }
-//
-//            }
-
-
+                }.onAppear(){
+                    
+                }
+                
+                
+            }
+            //                    List{
+            //                        ForEach(questionStore.sections) { section in
+            //                            NavigationLink(
+            //                                destination: Text("Destination"),
+            //                                label: {
+            //                                    AlgorithmCourseView(course: section ,show: false)
+            //                                })
+            //
+            //                        }
+            //
+            //            }
             
-
-
+            
+            
+            
+            
         }
     }
 }

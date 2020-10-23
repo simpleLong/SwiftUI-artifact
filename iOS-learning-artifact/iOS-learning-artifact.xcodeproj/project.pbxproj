@@ -45,8 +45,8 @@
 		8A6580882541764E0036E6E5 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8A6580862541764E0036E6E5 /* Podfile */; };
 		8A658099254177A30036E6E5 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658098254177A30036E6E5 /* SectionView.swift */; };
 		8A65809A254177A30036E6E5 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658098254177A30036E6E5 /* SectionView.swift */; };
-		8A6580A425417E390036E6E5 /* AlgorithmCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */; };
-		8A6580A525417E390036E6E5 /* AlgorithmCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */; };
+		8A6580A425417E390036E6E5 /* AlgorithmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6580A325417E390036E6E5 /* AlgorithmListView.swift */; };
+		8A6580A525417E390036E6E5 /* AlgorithmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6580A325417E390036E6E5 /* AlgorithmListView.swift */; };
 		8A68BE0B2535528100B88C95 /* QuestionDetail.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A68BE0A2535528100B88C95 /* QuestionDetail.json */; };
 		8A68BE0C2535528100B88C95 /* QuestionDetail.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A68BE0A2535528100B88C95 /* QuestionDetail.json */; };
 		8A68BE1825358B3400B88C95 /* QuestionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A68BE1725358B3400B88C95 /* QuestionDetail.swift */; };
@@ -107,7 +107,7 @@
 		8A65807F254175ED0036E6E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		8A6580862541764E0036E6E5 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		8A658098254177A30036E6E5 /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
-		8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmCourseView.swift; sourceTree = "<group>"; };
+		8A6580A325417E390036E6E5 /* AlgorithmListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmListView.swift; sourceTree = "<group>"; };
 		8A68BE0A2535528100B88C95 /* QuestionDetail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuestionDetail.json; sourceTree = "<group>"; };
 		8A68BE1725358B3400B88C95 /* QuestionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDetail.swift; sourceTree = "<group>"; };
 		8A68BE1E2535944000B88C95 /* QuestionDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDetailModel.swift; sourceTree = "<group>"; };
@@ -313,7 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				8A658098254177A30036E6E5 /* SectionView.swift */,
-				8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */,
+				8A6580A325417E390036E6E5 /* AlgorithmListView.swift */,
 			);
 			path = Section;
 			sourceTree = "<group>";
@@ -549,7 +549,7 @@
 				8A5D7043253337D2009F2A32 /* Question.swift in Sources */,
 				8A5D703C2532FD75009F2A32 /* Helper.swift in Sources */,
 				8A658080254175ED0036E6E5 /* Data.swift in Sources */,
-				8A6580A425417E390036E6E5 /* AlgorithmCourseView.swift in Sources */,
+				8A6580A425417E390036E6E5 /* AlgorithmListView.swift in Sources */,
 				52F4CB1F2512347000BCBA9F /* RootView.swift in Sources */,
 				52F4CAFA25122EC800BCBA9F /* iOS_learning_artifactApp.swift in Sources */,
 				52F4CB15251230D900BCBA9F /* AlgorithmCourseItem.swift in Sources */,
@@ -575,7 +575,7 @@
 				8A5D7044253337D2009F2A32 /* Question.swift in Sources */,
 				8A5D703D2532FD75009F2A32 /* Helper.swift in Sources */,
 				8A658081254175ED0036E6E5 /* Data.swift in Sources */,
-				8A6580A525417E390036E6E5 /* AlgorithmCourseView.swift in Sources */,
+				8A6580A525417E390036E6E5 /* AlgorithmListView.swift in Sources */,
 				52F4CB202512347000BCBA9F /* RootView.swift in Sources */,
 				52F4CAFB25122EC800BCBA9F /* iOS_learning_artifactApp.swift in Sources */,
 				52F4CB16251230D900BCBA9F /* AlgorithmCourseItem.swift in Sources */,
