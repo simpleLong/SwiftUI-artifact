@@ -1,0 +1,7 @@
+target 'iOS-learning-artifact (iOS)' do
+
+    use_frameworks!
+    
+pod 'ObjectMapper'
+
+end

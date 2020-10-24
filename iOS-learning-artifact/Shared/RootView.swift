@@ -12,7 +12,8 @@ import SwiftUI
 struct RootView: View {
 //    var questionItems : StatStatusPair = Bundle.main.decode(QuestionResponse.self, from: "questions.json").data.statStatusPairs
     var body: some View {
-        QuestionListView()
+        HomeView()
+        //QuestionListView()
     }
 }
 
@@ -22,25 +23,7 @@ func loadQuestionData() {
     print("questions====",questions.data.questions.count)
 
 
-//    let jsonData = """
-//            {
-//                "questionId": 1000147,
-//                "questiontitle": "黑盒光线反射",
-//                "questionslug": "IQvJ9i",
-//                "passRate": "20.1%",
-//                "difficulty": "Hard",
-//                "frontendQuestionId": "LCP 27",
-//                "columnArticles": 11,
-//                "status": null,
-//                "paidOnly": false
-//            }
-//            """.data(using: .utf8)!
-//    do {
-//        let city = try JSONDecoder().decode(Question.self, from: jsonData)
-//        print("city:", city)
-//    } catch {
-//        print(error.localizedDescription)
-//    }
+
 
     
 }

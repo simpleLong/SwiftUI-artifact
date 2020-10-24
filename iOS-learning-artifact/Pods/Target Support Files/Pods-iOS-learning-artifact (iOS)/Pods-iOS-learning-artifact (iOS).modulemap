@@ -1,0 +1,6 @@
+framework module Pods_iOS_learning_artifact__iOS_ {
+  umbrella header "Pods-iOS-learning-artifact (iOS)-umbrella.h"
+
+  export *
+  module * { export * }
+}

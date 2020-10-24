@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct QuestionRow: View {
-    var questionItem : Question = Bundle.main.decode(QuestionResponse.self, from: "questions.json").data.questions[0]
+    var questionItem : Question = Question()
     var body: some View {
         HStack(alignment: .top){
             
@@ -20,17 +20,17 @@ struct QuestionRow: View {
                 HStack{
                     Text("1.")
                         .font(.headline)
-                    Text(questionItem.questiontitle)
+                    Text(questionItem.questionTitle!)
                         .font(.headline)
                 }
                 HStack{
-                    Text(questionItem.difficulty)
+                    Text(questionItem.difficulty!)
                         .font(.subheadline)
                     
-                    Text("通过率" + questionItem.passRate)
+                    Text("通过率+ questionItem.passRate!" )
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("题解" + String(questionItem.columnArticles))
+                    Text("题解+ String(questionItem.columnArticles)" )
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

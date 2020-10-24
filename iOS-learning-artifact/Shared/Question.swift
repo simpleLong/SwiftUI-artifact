@@ -14,35 +14,7 @@ struct QuestionResponse :Codable{
     
     
 }
-struct Question :Codable ,Identifiable {
-    var id: UUID = UUID()
-    
-    
-    var questionId :Int
-    var questiontitle :String
-    var questionslug :String
-    var passRate :String
-    var difficulty: String
-    var frontendQuestionId :String
-    
-    var columnArticles :Int
-    var status :String?
-    var paidOnly :Bool
-    
-    enum CodingKeys :String,CodingKey {
-        case questionId
-        case questiontitle
-        case questionslug
-        case passRate
-        case difficulty
-        case frontendQuestionId
-        case columnArticles
-        case status
-        case paidOnly
-    }
 
-
-}
 struct QuestionData :Codable{
     var userName :String
     var numSolved :Int

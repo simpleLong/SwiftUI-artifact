@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,6 +35,18 @@
 		8A5D703D2532FD75009F2A32 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D703B2532FD75009F2A32 /* Helper.swift */; };
 		8A5D7043253337D2009F2A32 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D7042253337D2009F2A32 /* Question.swift */; };
 		8A5D7044253337D2009F2A32 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D7042253337D2009F2A32 /* Question.swift */; };
+		8A658065254174390036E6E5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658064254174390036E6E5 /* HomeView.swift */; };
+		8A658066254174390036E6E5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658064254174390036E6E5 /* HomeView.swift */; };
+		8A658075254175A00036E6E5 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658074254175A00036E6E5 /* DataStore.swift */; };
+		8A658076254175A00036E6E5 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658074254175A00036E6E5 /* DataStore.swift */; };
+		8A658080254175ED0036E6E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A65807F254175ED0036E6E5 /* Data.swift */; };
+		8A658081254175ED0036E6E5 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A65807F254175ED0036E6E5 /* Data.swift */; };
+		8A6580872541764E0036E6E5 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8A6580862541764E0036E6E5 /* Podfile */; };
+		8A6580882541764E0036E6E5 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8A6580862541764E0036E6E5 /* Podfile */; };
+		8A658099254177A30036E6E5 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658098254177A30036E6E5 /* SectionView.swift */; };
+		8A65809A254177A30036E6E5 /* SectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658098254177A30036E6E5 /* SectionView.swift */; };
+		8A6580A425417E390036E6E5 /* AlgorithmCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */; };
+		8A6580A525417E390036E6E5 /* AlgorithmCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */; };
 		8A68BE0B2535528100B88C95 /* QuestionDetail.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A68BE0A2535528100B88C95 /* QuestionDetail.json */; };
 		8A68BE0C2535528100B88C95 /* QuestionDetail.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A68BE0A2535528100B88C95 /* QuestionDetail.json */; };
 		8A68BE1825358B3400B88C95 /* QuestionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A68BE1725358B3400B88C95 /* QuestionDetail.swift */; };
@@ -43,6 +55,7 @@
 		8A68BE202535944000B88C95 /* QuestionDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A68BE1E2535944000B88C95 /* QuestionDetailModel.swift */; };
 		8A765D002531F9C300489B1A /* questions.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A765CFF2531F9C300489B1A /* questions.json */; };
 		8A765D012531F9C300489B1A /* questions.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A765CFF2531F9C300489B1A /* questions.json */; };
+		B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A5466DDDF5AA0A63A538047 /* Pods-iOS-learning-artifact (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-learning-artifact (iOS).debug.xcconfig"; path = "Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		52F4CAD125122EC600BCBA9F /* iOS_learning_artifactApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_learning_artifactApp.swift; sourceTree = "<group>"; };
 		52F4CAD225122EC600BCBA9F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		52F4CAD325122EC800BCBA9F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,14 +97,22 @@
 		52F4CB1A2512335B00BCBA9F /* ALgorithmCourseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ALgorithmCourseRow.swift; sourceTree = "<group>"; };
 		52F4CB1E2512347000BCBA9F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		52F4CB2125123C5C00BCBA9F /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		6B0FF2DEFD3B2DDE76B1253F /* Pods-iOS-learning-artifact (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-learning-artifact (iOS).release.xcconfig"; path = "Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS).release.xcconfig"; sourceTree = "<group>"; };
 		8A0828902533ED7E00DAC0A4 /* QuestionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListView.swift; sourceTree = "<group>"; };
 		8A0828972533ED9500DAC0A4 /* QuestionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRow.swift; sourceTree = "<group>"; };
 		8A5D703B2532FD75009F2A32 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		8A5D7042253337D2009F2A32 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		8A658064254174390036E6E5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8A658074254175A00036E6E5 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		8A65807F254175ED0036E6E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		8A6580862541764E0036E6E5 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		8A658098254177A30036E6E5 /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
+		8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmCourseView.swift; sourceTree = "<group>"; };
 		8A68BE0A2535528100B88C95 /* QuestionDetail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuestionDetail.json; sourceTree = "<group>"; };
 		8A68BE1725358B3400B88C95 /* QuestionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDetail.swift; sourceTree = "<group>"; };
 		8A68BE1E2535944000B88C95 /* QuestionDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDetailModel.swift; sourceTree = "<group>"; };
 		8A765CFF2531F9C300489B1A /* questions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = questions.json; sourceTree = "<group>"; };
+		BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_learning_artifact__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +148,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28B634A234168812496E8F4A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		52F4CACB25122EC500BCBA9F = {
 			isa = PBXGroup;
 			children = (
@@ -134,12 +165,17 @@
 				52F4CAEB25122EC800BCBA9F /* Tests iOS */,
 				52F4CAF625122EC800BCBA9F /* Tests macOS */,
 				52F4CAD925122EC800BCBA9F /* Products */,
+				F9F5117D49454AFA5A85898F /* Pods */,
+				28B634A234168812496E8F4A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		52F4CAD025122EC600BCBA9F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				8A658097254177540036E6E5 /* Section */,
+				8A6580732541757E0036E6E5 /* Data */,
+				8A658063254173A00036E6E5 /* Home */,
 				8A5D7049253340F6009F2A32 /* Question */,
 				8A5D703A2532FD52009F2A32 /* Common */,
 				52F4CB1D2512340000BCBA9F /* Navigation */,
@@ -151,6 +187,7 @@
 				8A0828902533ED7E00DAC0A4 /* QuestionListView.swift */,
 				8A0828972533ED9500DAC0A4 /* QuestionRow.swift */,
 				8A68BE1725358B3400B88C95 /* QuestionDetail.swift */,
+				8A6580862541764E0036E6E5 /* Podfile */,
 				8A765CFF2531F9C300489B1A /* questions.json */,
 				8A68BE0A2535528100B88C95 /* QuestionDetail.json */,
 				52F4CAD325122EC800BCBA9F /* Assets.xcassets */,
@@ -255,6 +292,41 @@
 			path = Question;
 			sourceTree = "<group>";
 		};
+		8A658063254173A00036E6E5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				8A658064254174390036E6E5 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		8A6580732541757E0036E6E5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8A658074254175A00036E6E5 /* DataStore.swift */,
+				8A65807F254175ED0036E6E5 /* Data.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		8A658097254177540036E6E5 /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				8A658098254177A30036E6E5 /* SectionView.swift */,
+				8A6580A325417E390036E6E5 /* AlgorithmCourseView.swift */,
+			);
+			path = Section;
+			sourceTree = "<group>";
+		};
+		F9F5117D49454AFA5A85898F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4A5466DDDF5AA0A63A538047 /* Pods-iOS-learning-artifact (iOS).debug.xcconfig */,
+				6B0FF2DEFD3B2DDE76B1253F /* Pods-iOS-learning-artifact (iOS).release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -262,9 +334,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 52F4CB0225122EC800BCBA9F /* Build configuration list for PBXNativeTarget "iOS-learning-artifact (iOS)" */;
 			buildPhases = (
+				90881A527B29A907934F1D68 /* [CP] Check Pods Manifest.lock */,
 				52F4CAD425122EC800BCBA9F /* Sources */,
 				52F4CAD525122EC800BCBA9F /* Frameworks */,
 				52F4CAD625122EC800BCBA9F /* Resources */,
+				CACE172A705B628675A540DF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -381,6 +455,7 @@
 			files = (
 				52F4CAFE25122EC800BCBA9F /* Assets.xcassets in Resources */,
 				8A765D002531F9C300489B1A /* questions.json in Resources */,
+				8A6580872541764E0036E6E5 /* Podfile in Resources */,
 				8A68BE0B2535528100B88C95 /* QuestionDetail.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +466,7 @@
 			files = (
 				52F4CAFF25122EC800BCBA9F /* Assets.xcassets in Resources */,
 				8A765D012531F9C300489B1A /* questions.json in Resources */,
+				8A6580882541764E0036E6E5 /* Podfile in Resources */,
 				8A68BE0C2535528100B88C95 /* QuestionDetail.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,22 +487,69 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		90881A527B29A907934F1D68 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-iOS-learning-artifact (iOS)-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CACE172A705B628675A540DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS)-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		52F4CAD425122EC800BCBA9F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8A0828982533ED9500DAC0A4 /* QuestionRow.swift in Sources */,
+				8A658075254175A00036E6E5 /* DataStore.swift in Sources */,
+				8A658099254177A30036E6E5 /* SectionView.swift in Sources */,
 				52F4CAFC25122EC800BCBA9F /* ContentView.swift in Sources */,
 				52F4CB1B2512335B00BCBA9F /* ALgorithmCourseRow.swift in Sources */,
 				52F4CB2225123C5C00BCBA9F /* Sidebar.swift in Sources */,
 				8A68BE1F2535944000B88C95 /* QuestionDetailModel.swift in Sources */,
 				8A68BE1825358B3400B88C95 /* QuestionDetail.swift in Sources */,
 				52F4CB18251232A700BCBA9F /* AlgorithmCourseSection.swift in Sources */,
+				8A658065254174390036E6E5 /* HomeView.swift in Sources */,
 				52F4CB122512302200BCBA9F /* AlgorithmCourse.swift in Sources */,
 				8A0828912533ED7E00DAC0A4 /* QuestionListView.swift in Sources */,
 				8A5D7043253337D2009F2A32 /* Question.swift in Sources */,
 				8A5D703C2532FD75009F2A32 /* Helper.swift in Sources */,
+				8A658080254175ED0036E6E5 /* Data.swift in Sources */,
+				8A6580A425417E390036E6E5 /* AlgorithmCourseView.swift in Sources */,
 				52F4CB1F2512347000BCBA9F /* RootView.swift in Sources */,
 				52F4CAFA25122EC800BCBA9F /* iOS_learning_artifactApp.swift in Sources */,
 				52F4CB15251230D900BCBA9F /* AlgorithmCourseItem.swift in Sources */,
@@ -438,16 +561,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A0828992533ED9500DAC0A4 /* QuestionRow.swift in Sources */,
+				8A658076254175A00036E6E5 /* DataStore.swift in Sources */,
+				8A65809A254177A30036E6E5 /* SectionView.swift in Sources */,
 				52F4CAFD25122EC800BCBA9F /* ContentView.swift in Sources */,
 				52F4CB1C2512335B00BCBA9F /* ALgorithmCourseRow.swift in Sources */,
 				52F4CB2325123C5C00BCBA9F /* Sidebar.swift in Sources */,
 				8A68BE202535944000B88C95 /* QuestionDetailModel.swift in Sources */,
 				8A68BE1925358B3400B88C95 /* QuestionDetail.swift in Sources */,
 				52F4CB19251232A700BCBA9F /* AlgorithmCourseSection.swift in Sources */,
+				8A658066254174390036E6E5 /* HomeView.swift in Sources */,
 				52F4CB132512302200BCBA9F /* AlgorithmCourse.swift in Sources */,
 				8A0828922533ED7E00DAC0A4 /* QuestionListView.swift in Sources */,
 				8A5D7044253337D2009F2A32 /* Question.swift in Sources */,
 				8A5D703D2532FD75009F2A32 /* Helper.swift in Sources */,
+				8A658081254175ED0036E6E5 /* Data.swift in Sources */,
+				8A6580A525417E390036E6E5 /* AlgorithmCourseView.swift in Sources */,
 				52F4CB202512347000BCBA9F /* RootView.swift in Sources */,
 				52F4CAFB25122EC800BCBA9F /* iOS_learning_artifactApp.swift in Sources */,
 				52F4CB16251230D900BCBA9F /* AlgorithmCourseItem.swift in Sources */,
@@ -599,6 +727,7 @@
 		};
 		52F4CB0325122EC800BCBA9F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A5466DDDF5AA0A63A538047 /* Pods-iOS-learning-artifact (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -621,6 +750,7 @@
 		};
 		52F4CB0425122EC800BCBA9F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B0FF2DEFD3B2DDE76B1253F /* Pods-iOS-learning-artifact (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
