@@ -31,7 +31,9 @@ struct QuestionDetail: View {
                 .padding()
                 .frame(width: UIScreen.main.bounds.width, height: 400, alignment: .top)
             Spacer()
-        }.onAppear(perform: {
+        }
+        .navigationBarTitle(titleStr)
+        .onAppear(perform: {
             getquestionDetail(titleSlug: titleSlug)
         })
     }
