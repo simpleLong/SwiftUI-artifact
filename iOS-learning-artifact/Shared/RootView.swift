@@ -12,7 +12,7 @@ import SwiftUI
 struct RootView: View {
 //    var questionItems : StatStatusPair = Bundle.main.decode(QuestionResponse.self, from: "questions.json").data.statStatusPairs
     var body: some View {
-        HomeView()
+        HomeView(showProfile: .constant(false))
         //QuestionListView()
     }
 }

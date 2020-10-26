@@ -92,25 +92,25 @@ struct AlgorithmCourseView: View {
         
         ZStack(alignment: .top) {
             
-            VStack {
-                ForEach(questionItems.indices,id:\.self){ index in
-                    
-                    NavigationLink(
-                        destination: QuestionDetail(questionDetail: questionItems[index]),
-                        label: {
-                            QuestionRow(questionItem: questionItems[index])
-                        })
-
-                }
-
-            }
-            .padding(30)
-            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 280, alignment: .top)
-            .offset(y: show ? 460 : 0)
-            .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
-            .opacity(show ? 1 : 0)
+//            VStack {
+//                ForEach(questionItems.indices,id:\.self){ index in
+//
+//                    NavigationLink(
+//                        destination: QuestionDetail(questionDetail: questionItems[index]),
+//                        label: {
+//                            QuestionRow(questionItem: questionItems[index], index: index)
+//                        })
+//
+//                }
+//
+//            }
+//            .padding(30)
+//            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 280, alignment: .top)
+//            .offset(y: show ? 280 : 0)
+//            .background(Color.white)
+//            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+//            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
+//            .opacity(show ? 1 : 0)
             
             VStack {
                 HStack(alignment: .top) {
@@ -141,8 +141,13 @@ struct AlgorithmCourseView: View {
                         .background(Color.black)
                         .clipShape(Circle())
                         .opacity(show ? 1 : 0)
+                        
                         .offset(x: 2, y: -2)
-                    }
+                    }  .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
+                        self.show = false
+                        self.active = false
+                        self.activeIndex = -1
+                    })
                 }
                 Spacer()
                 course.image
@@ -155,11 +160,11 @@ struct AlgorithmCourseView: View {
             .padding(show ? 30 : 20)
             .padding(.top, show ? 30 : 0)
             
-            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
+            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight:   280)
             .background(course.color)
             .cornerRadius(25)
             .shadow(color: course.shadowColor.opacity(0.3), radius: 20, x: 0, y: 20)
-           // .opacity(show ? 1 : 0)
+            .opacity(show ? 0 : 1)
             .gesture(
                 show ?
                     DragGesture().onChanged({ (value) in
@@ -188,16 +193,18 @@ struct AlgorithmCourseView: View {
             }
             
             )
+            if show {
+                QuestionCategoryDetail(course: course, show: $show, active: $active, activeIndex: $activeIndex, questionItems: questionItems)
+            }
         }
         .frame(height: show ? screen.height : 280)
         .scaleEffect(1 - activeView.height/1000)
-        .rotation3DEffect(
-            Angle(degrees: Double(self.activeView.height / 10 )),
-            axis: (x: 0.0, y: 10.0, z: 0.0)
-
-        )
-        .hueRotation(Angle(degrees: Double(self.activeView.height)))
-        .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+//        .rotation3DEffect(
+//            Angle(degrees: Double(self.activeView.height / 10 )),
+//            axis: (x: 0.0, y: 10.0, z: 0.0)
+//
+//        )
+//        .hueRotation(Angle(degrees: Double(self.activeView.height)))
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
         .gesture(
             show ?
