@@ -23,4 +23,11 @@ class QuestionStore: ObservableObject {
             self.sections = sections
         }
     }
+    
+    func login(account: String,password:String) {
+        Api().login(loginParams: ["account" :account,"password":password]) { (questions, sections) in
+            self.questions = questions
+            self.sections = sections
+        }
+    }
 }

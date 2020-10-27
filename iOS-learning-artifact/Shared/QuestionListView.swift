@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct QuestionListView: View {
-    var questionItems : [Question] = Bundle.main.decode(QuestionResponse.self, from: "questions.json").data.questions
+//    var questionItems : [Question] = Bundle.main.decode([Question].self, from: "questions.json")
     var body: some View {
         NavigationView{
-            List{
-                ForEach(questionItems){ questionItem in
-                    
-                    NavigationLink(
-                        destination: QuestionDetail(titleSlug:questionItem.questionslug!)){
-                        QuestionRow(questionItem: questionItem)
-                    }
-                    
-                }
-            }
+//            List{
+//                ForEach(questionItems){ questionItem in
+//
+//                    NavigationLink(
+//                        destination: QuestionDetail(titleSlug:questionItem.questionslug!)){
+//                        QuestionRow(questionItem: questionItem)
+//                    }
+//
+//                }
+//            }
+            Text("haizeiw")
         }
 
         

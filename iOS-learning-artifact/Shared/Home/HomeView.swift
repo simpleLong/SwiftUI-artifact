@@ -12,13 +12,30 @@ struct HomeView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var active = false
     @State var activeIndex = -1
+    @State var activeView = CGSize.zero
+    @Binding var showProfile: Bool
+    @State var viewState = CGSize.zero
+    @EnvironmentObject var user: UserStore
     var body: some View {
 
-        NavigationView{
-
+            
+        NavigationView {
+            ZStack {
                     GeometryReader { bounds in
                         ScrollView {
                             VStack {
+
+                                    HStack(spacing: 12) {
+                                        Text("Watching")
+                                            .font(.system(size: 28, weight: .bold))
+                                            .modifier(CustomFontModifier(size: 28))
+                                        
+                                        Spacer()
+                                        
+                                        AvatarView(showProfile: self.$showProfile)
+                                    }
+
+                                
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack(spacing: 20) {
                                         ForEach(questionStore.sections) { item in
@@ -35,7 +52,7 @@ struct HomeView: View {
                                     .padding(.bottom, 30)
                                 }
                                 .offset(y: -30)
-                               // .blur(radius: self.active ? 20 : 0)
+                                // .blur(radius: self.active ? 20 : 0)
                                 
                                 HStack {
                                     Text("Courses")
@@ -47,14 +64,20 @@ struct HomeView: View {
                                 VStack(spacing: 30) {
                                     ForEach(questionStore.sections.indices, id: \.self) { index in
                                         GeometryReader { geometry in
-
-                                        AlgorithmCourseView(course: questionStore.sections[index] ,show: false)                                        .offset(y: self.questionStore.sections[index].show ? -geometry.frame(in: .global).minY : 0)
+                                            
+                                            AlgorithmCourseView(course: questionStore.sections[index], show: self.$questionStore.sections[index].show,
+                                                                active: $active,
+                                                                activeIndex: $activeIndex,
+                                                                activeView: $activeView,
+                                                                index: index,
+                                                                questionItems: getTheSectionQuestions(questionStore.questions, self.questionStore.sections[index]))
+                                                .offset(y: self.questionStore.sections[index].show ? -geometry.frame(in: .global).minY : 0)
                                                 .opacity(self.activeIndex != index && self.active ? 0 : 1)
                                                 .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
                                                 .offset(x: self.activeIndex != index && self.active ? bounds.size.width : 0)
-
-
-
+                                            
+                                            
+                                            
                                         }
                                         .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
                                         .frame(maxWidth: self.questionStore.sections[index].show ? 712 : getCardWidth(bounds: bounds))
@@ -63,28 +86,47 @@ struct HomeView: View {
                                 }
                                 .padding(.bottom, 300)
                                 .offset(y: -60)
-
+                                
+                            }
+                        }.onAppear(){
+                            
+                        }
+                        
+                        
+                    }
+                    
+                    if user.showLogin {
+                        ZStack {
+                            LoginView(updateQuestionsBlock: { (questions, sections) in
+                                
+                                questionStore.questions = questions
+                                questionStore.sections = sections
+                                
+                            })
+                            
+                            
+                            VStack {
+                                HStack {
+                                    Spacer()
+                                    
+                                    Image(systemName: "xmark")
+                                    .frame(width: 36, height: 36)
+                                    .foregroundColor(.white)
+                                    .background(Color.black)
+                                        .clipShape(Circle())
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                            .onTapGesture {
+                                self.user.showLogin = false
                             }
                         }
-
-
                     }
-//                    List{
-//                        ForEach(questionStore.sections) { section in
-//                            NavigationLink(
-//                                destination: Text("Destination"),
-//                                label: {
-//                                    AlgorithmCourseView(course: section ,show: false)
-//                                })
-//
-//                        }
-//
-//            }
 
-
+            }
             
-
-
+            .navigationBarHidden(true)
         }
     }
 }
@@ -120,6 +162,50 @@ func getCardWidth(bounds: GeometryProxy) -> CGFloat {
 let screen = UIScreen.main.bounds
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView(showProfile: .constant(false))
+    }
+}
+struct AvatarView: View {
+    @Binding var showProfile: Bool
+    @EnvironmentObject var user: UserStore
+    
+    var body: some View {
+        VStack {
+            if user.isLogged {
+                Button(action: { self.showProfile.toggle() }) {
+                Image("Avatar")
+                    .renderingMode(.original)
+                    .resizable()
+                    .frame(width: 36, height: 36)
+                    .clipShape(Circle())
+                }
+            } else {
+                Button(action: { self.user.showLogin.toggle() }) {
+                Image(systemName: "person")
+                    .foregroundColor(.primary)
+                    .font(.system(size: 16, weight: .medium))
+                    .frame(width: 36, height: 36)
+                    .background(Color("background3"))
+                    .clipShape(Circle())
+                    .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                    
+                }.padding()
+            }
+        }
+    }
+}
+struct HomeBackgroundView: View {
+    @Binding var showProfile: Bool
+    
+    var body: some View {
+        VStack {
+            LinearGradient(gradient: Gradient(colors: [Color("background2"), Color("background1")]), startPoint: .top, endPoint: .bottom)
+                .frame(height: 200)
+            Spacer()
+        }
+        .background(Color("background1"))
+        .clipShape(RoundedRectangle(cornerRadius: showProfile ? 30 : 0, style: .continuous))
+        .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
     }
 }
