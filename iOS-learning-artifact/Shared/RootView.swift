@@ -31,7 +31,7 @@ func loadQuestionData() {
 func getquestions() {
     
     //        加密，当传递的参数中含有中文时必须加密
-            let newUrlString = "http://127.0.0.1:8000/getquestions/"
+            let newUrlString = host + "/getquestions/"
             //创建请求配置
             let config = URLSessionConfiguration.default
     //        创建请求URL

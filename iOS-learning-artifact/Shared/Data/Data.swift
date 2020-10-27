@@ -15,6 +15,7 @@ struct Post: Codable, Identifiable {
     var body: String
 }
 
+let host = "http://101.32.23.218:8000"
 
 struct Question :Codable ,Identifiable ,Mappable {
 
@@ -83,7 +84,7 @@ struct Question :Codable ,Identifiable ,Mappable {
 class Api {
     func login( loginParams: [String:String] ,  completion: @escaping ([Question],[Section]) -> ()) {
         //let newUrlString = "http://101.32.23.218:8000/login/"
-        let newUrlString = "http://127.0.0.1:8000/login/"
+        let newUrlString = host + "/login/"
 
         let config = URLSessionConfiguration.default
 
@@ -133,7 +134,7 @@ class Api {
     func getquestions(completion: @escaping ([Question],[Section]) -> ()) {
         
         //let newUrlString = "http://101.32.23.218:8000/getquestions/"
-        let newUrlString = "http://127.0.0.1:8000/getquestions/"
+        let newUrlString = host + "/getquestions/"
 
         let config = URLSessionConfiguration.default
 
