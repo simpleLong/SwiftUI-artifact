@@ -17,7 +17,7 @@ struct LoginView: View {
     @State var isLoading = false
     @State var isSuccessful = false
     @EnvironmentObject var user: UserStore
-    var updateQuestionsBlock :  ([Question],[Section]) -> ()
+    var updateQuestionsBlock :  (Bool) -> ()
     
     
     
@@ -26,21 +26,23 @@ struct LoginView: View {
         self.isFocused = false
         self.isLoading = true
         
-        Api().login(loginParams: ["account":email,"password":password]) { (questions, sections) in
-            if updateQuestionsBlock != nil {
-                updateQuestionsBlock(questions,sections)
-            }
+        Api().login(account: email, password: password) { isLoginSuccess in
+
+            updateQuestionsBlock(isLoginSuccess)
+
             self.isLoading = false
 
-            if questions.count == 0 {
-               // self.alertMessage = error?.localizedDescription ?? ""
+            if isLoginSuccess == false {
+               
                 self.showAlert = true
             } else {
-                self.isSuccessful = true
-                self.user.isLogged = true
-                UserDefaults.standard.set(true, forKey: "isLogged")
+
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.isSuccessful = true
+                    self.user.isLogged = true
+                    UserDefaults.standard.set(true, forKey: "isLogged")
+                    UserDefaults.standard.setValue(email, forKey: "account")
                     self.email = ""
                     self.password = ""
                     self.isSuccessful = false
@@ -169,7 +171,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(updateQuestionsBlock: { ([Question], [Section])  in
+        LoginView(updateQuestionsBlock: { isSuccess  in
             
         })
 //        .previewDevice("iPad Air 2")

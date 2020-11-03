@@ -35,6 +35,8 @@
 		8A5D703D2532FD75009F2A32 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D703B2532FD75009F2A32 /* Helper.swift */; };
 		8A5D7043253337D2009F2A32 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D7042253337D2009F2A32 /* Question.swift */; };
 		8A5D7044253337D2009F2A32 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5D7042253337D2009F2A32 /* Question.swift */; };
+		8A5F4329255139CD0097B619 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F4328255139CD0097B619 /* Record.swift */; };
+		8A5F432A255139CD0097B619 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5F4328255139CD0097B619 /* Record.swift */; };
 		8A658065254174390036E6E5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658064254174390036E6E5 /* HomeView.swift */; };
 		8A658066254174390036E6E5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658064254174390036E6E5 /* HomeView.swift */; };
 		8A658075254175A00036E6E5 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A658074254175A00036E6E5 /* DataStore.swift */; };
@@ -123,6 +125,7 @@
 		8A0828972533ED9500DAC0A4 /* QuestionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRow.swift; sourceTree = "<group>"; };
 		8A5D703B2532FD75009F2A32 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		8A5D7042253337D2009F2A32 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		8A5F4328255139CD0097B619 /* Record.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		8A658064254174390036E6E5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8A658074254175A00036E6E5 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		8A65807F254175ED0036E6E5 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 		52F4CAD025122EC600BCBA9F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				8A5F4327255139BC0097B619 /* Record */,
 				8A8C2DC625467EC10037C62B /* Login */,
 				8A8C2DBA254676AA0037C62B /* Modifiers */,
 				8A8C2DAE2546766E0037C62B /* Store */,
@@ -216,13 +220,8 @@
 				52F4CB1D2512340000BCBA9F /* Navigation */,
 				52F4CB0E25122EF500BCBA9F /* Algorithm */,
 				52F4CAD125122EC600BCBA9F /* iOS_learning_artifactApp.swift */,
-				8A5D7042253337D2009F2A32 /* Question.swift */,
 				8A68BE1E2535944000B88C95 /* QuestionDetailModel.swift */,
 				52F4CB1E2512347000BCBA9F /* RootView.swift */,
-				8A0828902533ED7E00DAC0A4 /* QuestionListView.swift */,
-				8A0828972533ED9500DAC0A4 /* QuestionRow.swift */,
-				8A68BE1725358B3400B88C95 /* QuestionDetail.swift */,
-				8A8C2DA7254669890037C62B /* QuestionCategoryDetail.swift */,
 				8A8C2DE0254686AA0037C62B /* Lottie */,
 				8A6580862541764E0036E6E5 /* Podfile */,
 				8A765CFF2531F9C300489B1A /* questions.json */,
@@ -325,8 +324,21 @@
 		8A5D7049253340F6009F2A32 /* Question */ = {
 			isa = PBXGroup;
 			children = (
+				8A8C2DA7254669890037C62B /* QuestionCategoryDetail.swift */,
+				8A68BE1725358B3400B88C95 /* QuestionDetail.swift */,
+				8A0828972533ED9500DAC0A4 /* QuestionRow.swift */,
+				8A0828902533ED7E00DAC0A4 /* QuestionListView.swift */,
+				8A5D7042253337D2009F2A32 /* Question.swift */,
 			);
 			path = Question;
+			sourceTree = "<group>";
+		};
+		8A5F4327255139BC0097B619 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				8A5F4328255139CD0097B619 /* Record.swift */,
+			);
+			path = Record;
 			sourceTree = "<group>";
 		};
 		8A658063254173A00036E6E5 /* Home */ = {
@@ -636,6 +648,7 @@
 				8A658065254174390036E6E5 /* HomeView.swift in Sources */,
 				52F4CB122512302200BCBA9F /* AlgorithmCourse.swift in Sources */,
 				8A0828912533ED7E00DAC0A4 /* QuestionListView.swift in Sources */,
+				8A5F4329255139CD0097B619 /* Record.swift in Sources */,
 				8A5D7043253337D2009F2A32 /* Question.swift in Sources */,
 				8A5D703C2532FD75009F2A32 /* Helper.swift in Sources */,
 				8A8C2DB0254676810037C62B /* UserStore.swift in Sources */,
@@ -670,6 +683,7 @@
 				8A658066254174390036E6E5 /* HomeView.swift in Sources */,
 				52F4CB132512302200BCBA9F /* AlgorithmCourse.swift in Sources */,
 				8A0828922533ED7E00DAC0A4 /* QuestionListView.swift in Sources */,
+				8A5F432A255139CD0097B619 /* Record.swift in Sources */,
 				8A5D7044253337D2009F2A32 /* Question.swift in Sources */,
 				8A5D703D2532FD75009F2A32 /* Helper.swift in Sources */,
 				8A8C2DB1254676810037C62B /* UserStore.swift in Sources */,

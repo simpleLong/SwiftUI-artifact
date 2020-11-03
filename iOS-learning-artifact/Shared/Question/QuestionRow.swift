@@ -26,17 +26,13 @@ struct QuestionRow: View {
     var body: some View {
         HStack(alignment: .top ){
             
-            //            Image("Check_in")
-            //                .resizable()
-            //                .frame(width: 20, height: 20)
-            
             VStack(alignment:.leading,spacing: 10) {
                 HStack(alignment: .top){
                     Text("\(index).")
                         .font(.system(size: 18))
                         .foregroundColor(Color(#colorLiteral(red: 0.501908958, green: 0.5019971728, blue: 0.5018973947, alpha: 1)))
                         .padding(.leading,10)
-                    Text(questionItem!.questionTitle!)
+                    Text(questionItem!.translatedTitle!)
                         .font(.system(size: 18))
                         .foregroundColor(Color(#colorLiteral(red: 0, green: 0.5332205892, blue: 0.7979013324, alpha: 1)))
                 }

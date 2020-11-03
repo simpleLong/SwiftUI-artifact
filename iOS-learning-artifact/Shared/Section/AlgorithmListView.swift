@@ -91,26 +91,7 @@ struct AlgorithmCourseView: View {
         
         
         ZStack(alignment: .top) {
-            
-//            VStack {
-//                ForEach(questionItems.indices,id:\.self){ index in
-//
-//                    NavigationLink(
-//                        destination: QuestionDetail(questionDetail: questionItems[index]),
-//                        label: {
-//                            QuestionRow(questionItem: questionItems[index], index: index)
-//                        })
-//
-//                }
-//
-//            }
-//            .padding(30)
-//            .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 280, alignment: .top)
-//            .offset(y: show ? 280 : 0)
-//            .background(Color.white)
-//            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-//            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
-//            .opacity(show ? 1 : 0)
+
             
             VStack {
                 HStack(alignment: .top) {
@@ -189,7 +170,7 @@ struct AlgorithmCourseView: View {
                 }else{
                     self.activeIndex = -1
                 }
-                //self.activeIndex = index
+
             }
             
             )

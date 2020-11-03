@@ -26,6 +26,8 @@ struct SubMission : Mappable ,Identifiable {
         return timeStampToCurrennTime(timeStamp: timestamp)
     }
     
+    
+    
     init?(map: Map) {
         
     }
@@ -58,49 +60,86 @@ struct QuestionDetail: View {
     @State var submissionModels : [SubMission] = []
     @State var showCode : Bool = false
     var questionDetail: Question
+    @State var recordState : RecordStateEnum = .noStart
+    @State private var animationAmount: CGFloat = 1
+    @State var isUpdate :Bool = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0){
+        VStack(alignment: .leading, spacing: 10){
             
             WebLabel.init(text: dealTheContentFont(text: questionDetail.translatedContent))
                 .frame(width: UIScreen.main.bounds.width, height: 400, alignment: .top)
-                .padding(.leading,15)
-            Spacer()
+                .padding()
+
+            HStack {
+                Spacer(minLength: 15)
+                Text("提交记录")
+                   // .offset(y:-30)
+                    .padding()
+                VStack(spacing:10) {
+                    Record(recordState: $recordState, isUpdate: $isUpdate)
+                        
+
+                    Text("长按记录解题思路")
+                        .font(.system(size: 14))
+                        .opacity(recordState == .start ? 0 : 1)
+                        .animation( recordState == .start ? Animation.easeIn(duration:0.5) : nil)
+                        
+                }
+                
             
+                
+
+
+                Spacer(minLength: 15)
+                
+            }
             ScrollView() {
                 ForEach(submissionModels) { item in
-                    HStack(spacing:10) {
-                       // Spacer(minLength: 10)
-                        
-                        Text(item.date)
-                            .font(.system(size: 14))
-                        Text(item.statusDisplay!)
-                            .font(.system(size: 14))
-                        Text(item.runtime!)
-                            .font(.system(size: 14))
-                        Text(item.lang!)
-                            .font(.system(size: 14))
-                        Spacer()
-                    }
-                    .padding(10)
-                    .onTapGesture{
-                        self.showCode.toggle()
-                    }
-                    .sheet(isPresented: self.$showCode, content: {
-                        Text(item.code ?? "")
-                            .font(.body)
+                    VStack {
+                        HStack(spacing:10) {
+
+                            Text(item.date)
+                                .font(.system(size: 14))
+                            Text(item.statusDisplay!)
+                                .font(.system(size: 14))
+                            Text(item.runtime!)
+                                .font(.system(size: 14))
+                            Text(item.lang!)
+                                .font(.system(size: 14))
+                            Spacer()
+                        }
+                        .padding(10)
+                        .onTapGesture{
+                            self.showCode.toggle()
+                        }
+                        Divider()
+
+                        .sheet(isPresented: self.$showCode, content: {
+                            Text(item.code ?? "")
+                                .padding()
+                                .font(.body)
                     })
-//                    .sheet(item: self.$showCode) {
-//
-//                    }
+                    }
+
                     
                     //.edgesIgnoringSafeArea(.all)
                 }
             }
             
         }
+        .padding(15)
         .navigationBarTitle(questionDetail.translatedTitle!,displayMode: .inline)
         .font(.title)
+        .alert(isPresented: $isUpdate, content: {
+            Alert.init(title: Text("是否上传刚刚所录内容"), primaryButton: Alert.Button.cancel({
+                self.isUpdate = false
+            }), secondaryButton: Alert.Button.default(Text("OK"), action: {
+                print("开始上传")
+                self.isUpdate = false
+            }))
+        })
+       
         .onAppear(perform: {
             getQuestionSubmission(titleSlug: questionDetail.questionslug)
         })
@@ -124,44 +163,30 @@ struct QuestionDetail: View {
     }
     
     func getQuestionSubmission(titleSlug :String?) {
-        guard let titleSlug = titleSlug  else {
-            return 
-        }
         
-        //        加密，当传递的参数中含有中文时必须加密
-        let newUrlString = host +  "/get_submissions/"
-        //创建请求配置
-        let config = URLSessionConfiguration.default
-        //        创建请求URL
-        let url = URL(string: newUrlString)
-        //        创建请求实例
-        var request = URLRequest(url: url!)
         
-        let session = URLSession(configuration: config)
         
-        request.httpMethod = "POST"
-        
-        let params = ["title_slug":titleSlug,"question_status":"ac"]
-        
-        request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+        ApiManager.getQuestionSubmission(titleSlug: titleSlug!).request { (data, response, error) in
+ 
+            guard let data = data else {return}
+            if  let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String : Any] {
 
-        let task = session.dataTask(with: request) { (data,response,error) in
+                
+                guard let submissions = dictionary["data"] as? [[String :Any]] else { return }
+                print(submissions)
+                submissionModels = Mapper<SubMission>().mapArray(JSONArray: submissions)
+                print(submissionModels)
+                
+            }
             
-            guard let dictionary = try? JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? [String : Any] else { return }
-            
-            guard let submissions = dictionary["data"] as? [[String :Any]] else { return }
-            print(submissions)
-            submissionModels = Mapper<SubMission>().mapArray(JSONArray: submissions)
-            print(submissionModels)
-
             
         }
-
-        task.resume()
+    
         
     }
     
 }
+
 func timeStampToCurrennTime(timeStamp: Double) -> String {
     //获取当前的时间戳
     //    let currentTime = Date().timeIntervalSinceNow

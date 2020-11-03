@@ -9,16 +9,19 @@ import SwiftUI
 
 import SwiftUI
 import ObjectMapper
+typealias RequestBlock = ([String: Any]) -> ()
+
 struct Post: Codable, Identifiable {
-    let id = UUID()
+    var id = UUID()
     var title: String
     var body: String
 }
 
-let host = "http://101.32.23.218:8000"
+//let host = "http://101.32.23.218:8000"
+
 
 struct Question :Codable ,Identifiable ,Mappable {
-
+    
     
     var id = UUID()
     
@@ -34,14 +37,14 @@ struct Question :Codable ,Identifiable ,Mappable {
     var questionId :String?
     var questionTitle :String?
     var questionslug :String?
-  //  var passRate :String?
+    //  var passRate :String?
     var difficulty: String?
     var questionFrontendId :String?
     var translatedTitle :String?
     
-
+    
     var status :String?
-
+    
     var topicTags:[[String:String]]?
     var translatedContent :String?
     var logo :String?
@@ -53,7 +56,7 @@ struct Question :Codable ,Identifiable ,Mappable {
         guard let acRate = stats["acRate"] else {return ""}
         
         return acRate
- 
+        
     }
     
     
@@ -73,109 +76,201 @@ struct Question :Codable ,Identifiable ,Mappable {
         topicTags <- map["topicTags"]
     }
     
-
+    
     init() {
         
     }
-
-
-
+    
+    
+    
 }
-class Api {
-    func login( loginParams: [String:String] ,  completion: @escaping ([Question],[Section]) -> ()) {
-        //let newUrlString = "http://101.32.23.218:8000/login/"
-        let newUrlString = host + "/login/"
 
+enum ApiManager {
+    case login(account :String,password :String)
+    case getQuestionSubmission(titleSlug:String)
+    case getquestions
+}
+public struct HTTPMethod: RawRepresentable, Equatable, Hashable {
+    /// `CONNECT` method.
+    public static let connect = HTTPMethod(rawValue: "CONNECT")
+    /// `DELETE` method.
+    public static let delete = HTTPMethod(rawValue: "DELETE")
+    /// `GET` method.
+    public static let get = HTTPMethod(rawValue: "GET")
+    /// `HEAD` method.
+    public static let head = HTTPMethod(rawValue: "HEAD")
+    /// `OPTIONS` method.
+    public static let options = HTTPMethod(rawValue: "OPTIONS")
+    /// `PATCH` method.
+    public static let patch = HTTPMethod(rawValue: "PATCH")
+    /// `POST` method.
+    public static let post = HTTPMethod(rawValue: "POST")
+    /// `PUT` method.
+    public static let put = HTTPMethod(rawValue: "PUT")
+    /// `TRACE` method.
+    public static let trace = HTTPMethod(rawValue: "TRACE")
+    
+    public let rawValue: String
+    
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
+}
+public protocol TargetType {
+    
+    /// The target's base `URL`.
+    var baseURL: URL { get }
+    
+    /// The path to be appended to `baseURL` to form the full `URL`.
+    var path: String { get }
+    
+    /// The HTTP method used in the request.
+    var method: HTTPMethod { get }
+    
+    /// Provides stub data for use in testing.
+    var sampleData: Data { get }
+    
+    var parames: [String : String]? { get  }
+    
+
+    var headers: [String: String]? { get }
+}
+
+extension ApiManager : TargetType {
+    
+    
+    
+    
+    static let host = "http://127.0.0.1:8000"
+    var baseURL: URL {
+        return URL.init(string: ApiManager.host)!
+    }
+    
+    var path: String {
+        switch self {
+        case .login(account: _, password: _):
+            return "/login/"
+        case .getquestions:
+            return "/getquestions/"
+        case .getQuestionSubmission(titleSlug: _):
+            return "/get_submissions/"
+        default:
+            break
+        }
+    }
+    
+    var method: HTTPMethod {
+        switch self {
+        
+        default:
+            return .post
+        }
+    }
+    
+    var sampleData: Data {
+        return "".data(using: String.Encoding.utf8)!
+    }
+    
+    var headers: [String : String]? {
+        return nil
+    }
+    
+    var parames: [String : String]? {
+        var commonParames:[String:String] = [:]
+        if let account = UserDefaults.standard.value(forKey: "account") as? String {
+            commonParames["account"] = account
+        }
+        
+        switch self {
+        case .login(account: let account, password: let password):
+            commonParames["account"] = account
+            commonParames["password"] = password
+            
+        case .getQuestionSubmission(titleSlug: let slug):
+            commonParames["titleSlug"] = slug
+            
+        default:
+            break
+        }
+        return commonParames
+    }
+    
+    func request(completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> Void {
         let config = URLSessionConfiguration.default
-
-        let url = URL(string: newUrlString)
-
-        var request = URLRequest(url: url!)
-
+        let url = self.baseURL.appendingPathComponent(self.path)
+        var request = URLRequest(url: url)
         let session = URLSession(configuration: config)
-
-        request.httpMethod = "POST"
-
-
-        request.httpBody = try! JSONSerialization.data(withJSONObject: loginParams, options: .prettyPrinted)
-        let task = session.dataTask(with: request) { [weak self] (data,response,error) in
-
-
-
-            dealTheOriginData(data: data) { (questions, sections) in
-                DispatchQueue.main.async {
-                    completion(questions,sections)
-                }
-            }
+        request.httpMethod = self.method.rawValue
+        
+        request.httpBody = try! JSONSerialization.data(withJSONObject: self.parames!, options: .prettyPrinted)
+        let task = session.dataTask(with: request) {  (data,response,error) in
             
 
             
+            completionHandler(data,response,error)
+
             
         }
         //        激活请求任务
         task.resume()
+        
+        
+        
     }
     
-    func getPosts(completion: @escaping ([Post]) -> ()) {
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else { return }
+    
+}
+class Api {
+    
+    func login( account :String ,password:String,  completion: @escaping (Bool) -> ()) {
         
-        URLSession.shared.dataTask(with: url) { (data, _, _) in
-            guard let data = data else { return }
+        ApiManager.login(account: account, password: password).request { (data,respones,error)  in
             
-            let posts = try! JSONDecoder().decode([Post].self, from: data)
-            
-            DispatchQueue.main.async {
-                completion(posts)
+            guard let data = data else {return}
+            let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
+            guard let responsedata = dictionary?["data"] as? [String:Any] else {return}
+            print("responsedata===",responsedata)
+            if error != nil {
+                completion(false)
+            }else{
+                if dictionary?["code"] as? String == "1"  {
+                    completion(true)
+                }else{
+                    completion(false)
+                }
             }
+
         }
-        .resume()
+
     }
+    
+    
     
     func getquestions(completion: @escaping ([Question],[Section]) -> ()) {
         
-        //let newUrlString = "http://101.32.23.218:8000/getquestions/"
-        let newUrlString = host + "/getquestions/"
 
-        let config = URLSessionConfiguration.default
-
-        let url = URL(string: newUrlString)
-
-        var request = URLRequest(url: url!)
-
-        let session = URLSession(configuration: config)
-
-        request.httpMethod = "POST"
-
-//        request.httpBody = try! JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-
-        let task = session.dataTask(with: request) { [weak self] (data,response,error) in
+        ApiManager.getquestions.request { (data,respones,error) in
             
-
-
-
-            dealTheOriginData(data: data) { (questions, sections) in
+            guard let data = data else {return}
+            let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
+            guard let responsedata = dictionary?["data"] as? [String:Any] else {return}
+            dealTheOriginData(data: responsedata) { (questions, sections) in
                 DispatchQueue.main.async {
                     completion(questions,sections)
                 }
             }
-            
-
-            
-            
         }
-        //        激活请求任务
-        task.resume()
         
     }
     
     
 }
 
-func dealTheOriginData(data: Data?,completion: @escaping ([Question],[Section]) -> ())  {
-    guard let data = data else { return }
-    let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
-    guard let questionData = dictionary?["data"] as? [String:Any] else {return}
-    guard let list = questionData["list"] as? [[String:Any]]  else {return}
+func dealTheOriginData(data: [String :Any],completion: @escaping ([Question],[Section]) -> ())  {
+    //    guard let data = data else { return }
+    //    let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
+    //    guard let questionData = dictionary?["data"] as? [String:Any] else {return}
+    guard let list = data["list"] as? [[String:Any]]  else {return}
     let questions = Mapper<Question>().mapArray(JSONArray: list)
     
     var dict : [String :Int] = [:]
@@ -185,7 +280,7 @@ func dealTheOriginData(data: Data?,completion: @escaping ([Question],[Section]) 
                 dict[topicTag["name"]!] = dict[topicTag["name"]!] != nil ? dict[topicTag["name"]!]! + 1 : 1
             }
         }
-
+        
     }
     var sections : [Section] = []
     
@@ -193,7 +288,7 @@ func dealTheOriginData(data: Data?,completion: @escaping ([Question],[Section]) 
     
     for (index,item)  in dict.enumerated() {
         print("key===\(item.key),value===\(item.value)")
-
+        
         let logoStr = item.key.replacingOccurrences(of: " ", with: "").lowercased()
         let imageName = "StarrySkybg\(index%9)"
         let section = Section(title: "标签分类为\(item.key)的算法题", subtitle: "\(item.value)道\(translateDict[item.key] ?? item.key )题", logo: logoStr, image: Image(imageName), color: LinearGradient(gradient: Gradient(colors: [gradients[index%14].color1, gradients[index%14].color2]), startPoint: .topLeading, endPoint: .bottomTrailing), shadowColor: gradients[index%14].color2,topicTag:item.key)

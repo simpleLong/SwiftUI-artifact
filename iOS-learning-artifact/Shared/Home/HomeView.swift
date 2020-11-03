@@ -26,16 +26,16 @@ struct HomeView: View {
                             VStack {
 
                                     HStack(spacing: 12) {
-                                        Text("Watching")
-                                            .font(.system(size: 28, weight: .bold))
-                                            .modifier(CustomFontModifier(size: 28))
+                                        Text("Algorithm classification display")
+                                            .modifier(CustomFontModifier(size: 18))
+                                            .padding()
                                         
                                         Spacer()
                                         
                                         AvatarView(showProfile: self.$showProfile)
                                     }
 
-                                
+                                // MARK: -3d scrollView 滑动栏
                                 ScrollView(.horizontal, showsIndicators: false){
                                     HStack(spacing: 20) {
                                         ForEach(questionStore.sections) { item in
@@ -52,11 +52,11 @@ struct HomeView: View {
                                     .padding(.bottom, 30)
                                 }
                                 .offset(y: -30)
-                                // .blur(radius: self.active ? 20 : 0)
                                 
-                                HStack {
-                                    Text("Courses")
-                                        .font(.title).bold()
+                                HStack(spacing:15) {
+                                    Text("Algorithm Category")
+                                        .padding(15)
+                                        .font(.headline)
                                     Spacer()
                                 }
                                 .offset(y: -50)
@@ -76,8 +76,6 @@ struct HomeView: View {
                                                 .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
                                                 .offset(x: self.activeIndex != index && self.active ? bounds.size.width : 0)
                                             
-                                            
-                                            
                                         }
                                         .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
                                         .frame(maxWidth: self.questionStore.sections[index].show ? 712 : getCardWidth(bounds: bounds))
@@ -88,27 +86,22 @@ struct HomeView: View {
                                 .offset(y: -60)
                                 
                             }
-                        }.onAppear(){
-                            
                         }
-                        
-                        
                     }
-                    
+                    // MARK: -显示登陆页面
                     if user.showLogin {
                         ZStack {
-                            LoginView(updateQuestionsBlock: { (questions, sections) in
+                            LoginView(updateQuestionsBlock: { isLoginSuccess in
                                 
-                                questionStore.questions = questions
-                                questionStore.sections = sections
+                                if isLoginSuccess {
+                                    questionStore.getquestions()
+                                }
                                 
                             })
-                            
                             
                             VStack {
                                 HStack {
                                     Spacer()
-                                    
                                     Image(systemName: "xmark")
                                     .frame(width: 36, height: 36)
                                     .foregroundColor(.white)
@@ -165,6 +158,7 @@ struct HomeView_Previews: PreviewProvider {
         HomeView(showProfile: .constant(false))
     }
 }
+// MARK: -头像
 struct AvatarView: View {
     @Binding var showProfile: Bool
     @EnvironmentObject var user: UserStore
@@ -173,11 +167,12 @@ struct AvatarView: View {
         VStack {
             if user.isLogged {
                 Button(action: { self.showProfile.toggle() }) {
-                Image("Avatar")
+                Image("avatar")
                     .renderingMode(.original)
                     .resizable()
                     .frame(width: 36, height: 36)
                     .clipShape(Circle())
+                    .padding()
                 }
             } else {
                 Button(action: { self.user.showLogin.toggle() }) {
@@ -195,17 +190,17 @@ struct AvatarView: View {
         }
     }
 }
-struct HomeBackgroundView: View {
-    @Binding var showProfile: Bool
-    
-    var body: some View {
-        VStack {
-            LinearGradient(gradient: Gradient(colors: [Color("background2"), Color("background1")]), startPoint: .top, endPoint: .bottom)
-                .frame(height: 200)
-            Spacer()
-        }
-        .background(Color("background1"))
-        .clipShape(RoundedRectangle(cornerRadius: showProfile ? 30 : 0, style: .continuous))
-        .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
-    }
-}
+//struct HomeBackgroundView: View {
+//    @Binding var showProfile: Bool
+//
+//    var body: some View {
+//        VStack {
+//            LinearGradient(gradient: Gradient(colors: [Color("background2"), Color("background1")]), startPoint: .top, endPoint: .bottom)
+//                .frame(height: 200)
+//            Spacer()
+//        }
+//        .background(Color("background1"))
+//        .clipShape(RoundedRectangle(cornerRadius: showProfile ? 30 : 0, style: .continuous))
+//        .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
+//    }
+//}
