@@ -8,6 +8,9 @@
 import SwiftUI
 import WebKit
 import ObjectMapper
+
+var recordfilePath = ""
+
 struct SubMission : Mappable ,Identifiable {
     var id = UUID()
     
@@ -77,7 +80,7 @@ struct QuestionDetail: View {
                    // .offset(y:-30)
                     .padding()
                 VStack(spacing:10) {
-                    Record(recordState: $recordState, isUpdate: $isUpdate)
+                    Record(recordState: $recordState, isUpdate: $isUpdate, slug: questionDetail.questionslug!)
                         
 
                     Text("长按记录解题思路")
@@ -136,7 +139,17 @@ struct QuestionDetail: View {
                 self.isUpdate = false
             }), secondaryButton: Alert.Button.default(Text("OK"), action: {
                 print("开始上传")
+                print("recordfilePath==",recordfilePath)
+
+                
+                
+                ApiManager.updateAlgorithmRecord(titleSlug: recordfilePath).upload(filePath: recordfilePath) { (data, response, error) in
+                    print("data===",data)
+                    print("response===",response)
+                    print("error===",error)
+                }
                 self.isUpdate = false
+                
             }))
         })
        

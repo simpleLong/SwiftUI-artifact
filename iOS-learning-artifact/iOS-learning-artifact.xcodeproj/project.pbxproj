@@ -208,6 +208,7 @@
 		52F4CAD025122EC600BCBA9F /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				8ACC0B062553D5F3002D43E2 /* Networking */,
 				8A5F4327255139BC0097B619 /* Record */,
 				8A8C2DC625467EC10037C62B /* Login */,
 				8A8C2DBA254676AA0037C62B /* Modifiers */,
@@ -402,6 +403,13 @@
 				8A8C2DE2254686AA0037C62B /* success.json */,
 			);
 			path = Lottie;
+			sourceTree = "<group>";
+		};
+		8ACC0B062553D5F3002D43E2 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		F9F5117D49454AFA5A85898F /* Pods */ = {

@@ -24,9 +24,5 @@ class QuestionStore: ObservableObject {
         }
     }
     
-//    func login(account: String,password:String) {
-//        Api().login(account: account, password: password) { isSuccess in
-//
-//        }
-//    }
+
 }

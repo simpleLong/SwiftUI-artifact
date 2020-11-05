@@ -11,85 +11,6 @@ import SwiftUI
 import ObjectMapper
 typealias RequestBlock = ([String: Any]) -> ()
 
-struct Post: Codable, Identifiable {
-    var id = UUID()
-    var title: String
-    var body: String
-}
-
-//let host = "http://101.32.23.218:8000"
-
-
-struct Question :Codable ,Identifiable ,Mappable {
-    
-    
-    var id = UUID()
-    
-    var difficultyLabelColor : Color{
-        guard let difficulty = difficulty else {
-            return Color(#colorLiteral(red: 0, green: 0.5790003538, blue: 0.4385164976, alpha: 1))
-        }
-        let colorDict = ["Easy":Color(#colorLiteral(red: 0, green: 0.5790003538, blue: 0.4385164976, alpha: 1)),"Medium":Color(#colorLiteral(red: 0.8819206953, green: 0.5761888623, blue: 0.4387951195, alpha: 1)),"Hard":Color(#colorLiteral(red: 0.8828930855, green: 0.2852645516, blue: 0.2618650198, alpha: 1))]
-        return colorDict[difficulty]!
-        
-    }
-    
-    var questionId :String?
-    var questionTitle :String?
-    var questionslug :String?
-    //  var passRate :String?
-    var difficulty: String?
-    var questionFrontendId :String?
-    var translatedTitle :String?
-    
-    
-    var status :String?
-    
-    var topicTags:[[String:String]]?
-    var translatedContent :String?
-    var logo :String?
-    var stats : [String:String]?
-    
-    var passRate: String{
-        
-        guard let stats = stats else {return ""}
-        guard let acRate = stats["acRate"] else {return ""}
-        
-        return acRate
-        
-    }
-    
-    
-    
-    init?(map: Map) {
-        
-    }
-    
-    mutating func mapping(map: Map) {
-        questionId <- map["questionId"]
-        questionFrontendId <- map["questionFrontendId"]
-        questionTitle <- map["questionTitle"]
-        translatedTitle <- map["translatedTitle"]
-        questionslug <- map["questionTitleSlug"]
-        difficulty <- map["difficulty"]
-        translatedContent <- map["translatedContent"]
-        topicTags <- map["topicTags"]
-    }
-    
-    
-    init() {
-        
-    }
-    
-    
-    
-}
-
-enum ApiManager {
-    case login(account :String,password :String)
-    case getQuestionSubmission(titleSlug:String)
-    case getquestions
-}
 public struct HTTPMethod: RawRepresentable, Equatable, Hashable {
     /// `CONNECT` method.
     public static let connect = HTTPMethod(rawValue: "CONNECT")
@@ -136,6 +57,17 @@ public protocol TargetType {
     var headers: [String: String]? { get }
 }
 
+
+enum ApiManager {
+    case login(account :String,password :String)
+    case getQuestionSubmission(titleSlug:String)
+    case getquestions
+    case updateAlgorithmRecord(titleSlug: String)
+    case getAlgorithmRecord(titleSlug: String)
+}
+
+
+
 extension ApiManager : TargetType {
     
     
@@ -154,6 +86,11 @@ extension ApiManager : TargetType {
             return "/getquestions/"
         case .getQuestionSubmission(titleSlug: _):
             return "/get_submissions/"
+        case .updateAlgorithmRecord:
+            return "/update_question_record/"
+        case .getAlgorithmRecord:
+            return "/get_question_record/"
+        
         default:
             break
         }
@@ -180,7 +117,7 @@ extension ApiManager : TargetType {
         if let account = UserDefaults.standard.value(forKey: "account") as? String {
             commonParames["account"] = account
         }
-        
+        commonParames["account"] = "18588409461"
         switch self {
         case .login(account: let account, password: let password):
             commonParames["account"] = account
@@ -188,12 +125,63 @@ extension ApiManager : TargetType {
             
         case .getQuestionSubmission(titleSlug: let slug):
             commonParames["titleSlug"] = slug
+        case .getAlgorithmRecord(titleSlug: let slug):
+            commonParames["titleSlug"] = slug
             
         default:
             break
         }
         return commonParames
     }
+    func upload(filePath: String ,completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> Void {
+        let config = URLSessionConfiguration.default
+        let url = self.baseURL.appendingPathComponent(self.path)
+        var request = URLRequest(url: url)
+        let session = URLSession(configuration: config)
+        request.httpMethod = self.method.rawValue
+        let urlpath = URL.init(fileURLWithPath: filePath)
+        
+         let data = try? Data(contentsOf: urlpath)
+        let filename = filePath.components(separatedBy: "/").last!
+        
+        
+        let boundary = "Boundary+\(arc4random())\(arc4random())"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var httpbody = Data.init()
+        
+
+        httpbody.append("\(boundary)\r\n".data(using: .utf8)!)
+        httpbody.append("Content-Disposition: form-data; name=\"file\"; filename=\(filename)\r\n".data(using: .utf8)!)
+        httpbody.append("Content-Type: audio/x-wav\r\n\r\n".data(using: .utf8)!)
+        httpbody.append(data!)
+        httpbody.append("\r\n".data(using: .utf8)!)
+        httpbody.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        if let parames = self.parames {
+            for (key,value) in parames {
+                httpbody.append("--\(boundary)\r\n".data(using: .utf8)!)
+                httpbody.append("Content-Disposition: form-data; name=\(key)\r\n\r\n".data(using: .utf8)!)
+                httpbody.append("\(value)\r\n".data(using: .utf8)!)
+            }
+        }
+
+        
+        request.httpBody = try! JSONSerialization.data(withJSONObject: self.parames!, options: .prettyPrinted)
+        let task = session.uploadTask(with: request, from: httpbody) { (data, response, error) in
+            print("data===",data)
+            print("response===",response)
+            print("error===",error)
+        }
+        //        激活请求任务
+        task.resume()
+        
+        
+        
+    }
+    
+    
+
     
     func request(completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> Void {
         let config = URLSessionConfiguration.default
@@ -267,9 +255,7 @@ class Api {
 }
 
 func dealTheOriginData(data: [String :Any],completion: @escaping ([Question],[Section]) -> ())  {
-    //    guard let data = data else { return }
-    //    let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
-    //    guard let questionData = dictionary?["data"] as? [String:Any] else {return}
+
     guard let list = data["list"] as? [[String:Any]]  else {return}
     let questions = Mapper<Question>().mapArray(JSONArray: list)
     

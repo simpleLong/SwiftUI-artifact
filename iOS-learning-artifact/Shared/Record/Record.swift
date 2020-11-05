@@ -13,6 +13,11 @@ import AVFoundation
 struct LongPressButton : UIViewRepresentable{
     @Binding var recordState : RecordStateEnum
     @Binding var isUpdate : Bool
+    var titleSlug :String!
+
+    
+    
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -21,6 +26,8 @@ struct LongPressButton : UIViewRepresentable{
         let image = UIImage(systemName: "mic", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))
         let imageView = UIImageView.init(image: image)
         let gesture = UILongPressGestureRecognizer.init(target: context.coordinator, action: #selector(context.coordinator.startRecord(gesture:)))
+        
+
         
         imageView.addGestureRecognizer(gesture)
         imageView.isUserInteractionEnabled = true
@@ -40,9 +47,13 @@ struct LongPressButton : UIViewRepresentable{
         let recordManage = RecordManager()
         
         
+        
         @objc func startRecord(gesture:UILongPressGestureRecognizer) -> Void {
             if gesture.state == .began {
                 print("开始了")
+                let recordName = "/" + parent.titleSlug + ".wav"
+                
+                recordManage.file_path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + recordName
                 parent.recordState = RecordStateEnum.start
                 recordManage.beginRecord()
             }else if gesture.state == .cancelled{
@@ -52,8 +63,13 @@ struct LongPressButton : UIViewRepresentable{
             }else{
                 print("结束了")
                 parent.recordState = RecordStateEnum.end
-                parent.isUpdate = true
+                
                 recordManage.stopRecord()
+                parent.isUpdate = true
+                
+                recordfilePath = recordManage.file_path!
+                print(recordfilePath)
+                
             }
         }
         
@@ -65,10 +81,11 @@ struct LongPressButton : UIViewRepresentable{
 
 class RecordManager {
     
-    // @EnvironmentObject var recordState : RecordState
+
     var recorder: AVAudioRecorder?
     var player: AVAudioPlayer?
-    let file_path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first?.appending("/record.wav")
+
+    var file_path : String?//= NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
     
     
     //开始录音
@@ -144,12 +161,13 @@ struct Record: View {
     
     @Binding var recordState : RecordStateEnum
     @Binding var isUpdate :Bool
+    var slug :String
     
     var body: some View {
         
         
         ZStack {
-            LongPressButton(recordState: $recordState, isUpdate: $isUpdate)
+            LongPressButton(recordState: $recordState, isUpdate: $isUpdate ,titleSlug: slug)
                 .frame(width: 25, height: 25, alignment: .center)
                 .background(
                     Circle()
@@ -168,6 +186,6 @@ struct Record: View {
 
 struct Record_Previews: PreviewProvider {
     static var previews: some View {
-        Record(recordState: .constant(.noStart), isUpdate: .constant(false))
+        Record(recordState: .constant(.noStart), isUpdate: .constant(false), slug: "")
     }
 }

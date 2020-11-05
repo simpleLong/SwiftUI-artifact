@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import ObjectMapper
 struct QuestionResponse :Codable{
     var code :Int
     var data : QuestionData
@@ -48,4 +48,68 @@ struct Stat :Codable {
         case isNewQuestion = "is_new_question"
     }
 
+}
+struct Question :Codable ,Identifiable ,Mappable {
+    
+    
+    var id = UUID()
+    
+    var difficultyLabelColor : Color{
+        guard let difficulty = difficulty else {
+            return Color(#colorLiteral(red: 0, green: 0.5790003538, blue: 0.4385164976, alpha: 1))
+        }
+        let colorDict = ["Easy":Color(#colorLiteral(red: 0, green: 0.5790003538, blue: 0.4385164976, alpha: 1)),"Medium":Color(#colorLiteral(red: 0.8819206953, green: 0.5761888623, blue: 0.4387951195, alpha: 1)),"Hard":Color(#colorLiteral(red: 0.8828930855, green: 0.2852645516, blue: 0.2618650198, alpha: 1))]
+        return colorDict[difficulty]!
+        
+    }
+    
+    var questionId :String?
+    var questionTitle :String?
+    var questionslug :String?
+    //  var passRate :String?
+    var difficulty: String?
+    var questionFrontendId :String?
+    var translatedTitle :String?
+    
+    
+    var status :String?
+    
+    var topicTags:[[String:String]]?
+    var translatedContent :String?
+    var logo :String?
+    var stats : [String:String]?
+    
+    var passRate: String{
+        
+        guard let stats = stats else {return ""}
+        guard let acRate = stats["acRate"] else {return ""}
+        
+        return acRate
+        
+    }
+    
+    
+    
+    init?(map: Map) {
+        
+    }
+    
+    mutating func mapping(map: Map) {
+        questionId <- map["questionId"]
+        questionFrontendId <- map["questionFrontendId"]
+        questionTitle <- map["questionTitle"]
+        translatedTitle <- map["translatedTitle"]
+        questionslug <- map["questionTitleSlug"]
+        difficulty <- map["difficulty"]
+        translatedContent <- map["translatedContent"]
+        topicTags <- map["topicTags"]
+    }
+    
+    
+    init() {
+        
+    }
+    
+    
+    
 }
