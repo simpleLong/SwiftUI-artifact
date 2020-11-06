@@ -2,7 +2,7 @@
 //  QuestionDetail.swift
 //  iOS-learning-artifact
 //
-//  Created by longxd on 2020/10/13.
+//  Created by longxd on 2020/11/5.
 //
 
 import SwiftUI
@@ -11,41 +11,7 @@ import ObjectMapper
 
 var recordfilePath = ""
 
-struct SubMission : Mappable ,Identifiable {
-    var id = UUID()
-    
-    
-    var runtime :String?
-    var code :String?
-    var memory :String?
-    var statusDisplay :String?
-    
-    var timestamp :Double?
-    var lang :String?
-    var date :String {
-        guard let timestamp = timestamp else {
-            return ""
-        }
-        return timeStampToCurrennTime(timeStamp: timestamp)
-    }
-    
-    
-    
-    init?(map: Map) {
-        
-    }
-    
-    mutating func mapping(map: Map) {
-        runtime <- map["runtime"]
-        code <- map["code"]
-        memory <- map["memory"]
-        timestamp <- map["timestamp"]
-        lang <- map["lang"]
-        statusDisplay <- map["statusDisplay"]
-    }
-    
-    
-}
+// MARK: -将WKWebVIEW 转化成SwiftUI 能用的类型
 struct WebLabel :UIViewRepresentable {
     var text:String
     func makeUIView(context: Context) -> WKWebView {
@@ -57,6 +23,11 @@ struct WebLabel :UIViewRepresentable {
         
     }
 }
+
+class Down: ObservableObject {
+    @Published  var downloadTask : URLSessionDownloadTask?
+    @Published  var downloaddelegate : DownLoadDelegateClass?
+}
 struct QuestionDetail: View {
     
     @State var contentText = ""
@@ -66,100 +37,122 @@ struct QuestionDetail: View {
     @State var recordState : RecordStateEnum = .noStart
     @State private var animationAmount: CGFloat = 1
     @State var isUpdate :Bool = false
+    @ObservedObject var down : Down
+    @Binding var showSelf: Bool
+    
+    
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10){
+        ScrollView{
             
-            WebLabel.init(text: dealTheContentFont(text: questionDetail.translatedContent))
-                .frame(width: UIScreen.main.bounds.width, height: 400, alignment: .top)
-                .padding()
-
-            HStack {
-                Spacer(minLength: 15)
-                Text("提交记录")
-                   // .offset(y:-30)
-                    .padding()
-                VStack(spacing:10) {
-                    Record(recordState: $recordState, isUpdate: $isUpdate, slug: questionDetail.questionslug!)
-                        
-
-                    Text("长按记录解题思路")
-                        .font(.system(size: 14))
-                        .opacity(recordState == .start ? 0 : 1)
-                        .animation( recordState == .start ? Animation.easeIn(duration:0.5) : nil)
-                        
+            VStack(alignment: .leading, spacing: 10){
+                
+                Button(action: {
+                    self.showSelf = false
+                }) {
+                    Image("backIcon")
                 }
+                .frame(height: 40)
+                WebLabel.init(text: dealTheContentFont(text: questionDetail.translatedContent))
+                    .frame(width: UIScreen.main.bounds.width-30, height: 400, alignment: .top)
+                    .background(Color.red)
                 
-            
+                Divider()
                 
-
-
-                Spacer(minLength: 15)
-                
-            }
-            ScrollView() {
-                ForEach(submissionModels) { item in
-                    VStack {
-                        HStack(spacing:10) {
-
-                            Text(item.date)
-                                .font(.system(size: 14))
-                            Text(item.statusDisplay!)
-                                .font(.system(size: 14))
-                            Text(item.runtime!)
-                                .font(.system(size: 14))
-                            Text(item.lang!)
-                                .font(.system(size: 14))
-                            Spacer()
-                        }
-                        .padding(10)
-                        .onTapGesture{
-                            self.showCode.toggle()
-                        }
-                        Divider()
-
-                        .sheet(isPresented: self.$showCode, content: {
-                            Text(item.code ?? "")
-                                .padding()
-                                .font(.body)
-                    })
-                    }
-
+                HStack {
                     
-                    //.edgesIgnoringSafeArea(.all)
+                    Text("提交记录")
+                        .font(.subheadline)
+                        .padding()
+                    
+                    VStack {
+                        Image(systemName: "play.circle.fill").font(.system(size: 30, weight: .regular)).foregroundColor(.orange)
+                            .padding(2)
+                        
+                        Text("点击播放解题思路")
+                            .font(.subheadline)
+                    }
+                    .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
+                        
+                        
+                    })
+                    
+                    VStack(spacing:10) {
+                        Record(recordState: $recordState, isUpdate: $isUpdate, slug: questionDetail.questionslug!)
+                        
+                        Text("长按记录解题思路")
+                            .font(.subheadline)
+                            .opacity(recordState == .start ? 0 : 1)
+                            .animation( recordState == .start ? Animation.easeIn(duration:0.5) : nil)
+                        
+                    }
+                    .padding()
+                    
                 }
+                
+                Divider()
+                
+                ScrollView() {
+                    ForEach(submissionModels) { item in
+                        VStack {
+                            HStack(spacing:10) {
+                                
+                                Text(item.date)
+                                    .font(.system(size: 14))
+                                Text(item.statusDisplay!)
+                                    .font(.system(size: 14))
+                                Text(item.runtime!)
+                                    .font(.system(size: 14))
+                                Text(item.lang!)
+                                    .font(.system(size: 14))
+                                Spacer()
+                            }
+                            .padding(10)
+                            .onTapGesture{
+                                self.showCode.toggle()
+                            }
+                            Divider()
+                                
+                                .sheet(isPresented: self.$showCode, content: {
+                                    ScrollView {
+                                        Text(item.code ?? "")
+                                            .padding()
+                                            .font(.body)
+                                    }
+                                })
+                        }
+                        
+                    }
+                }
+                
             }
-            
-        }
-        .padding(15)
-        .navigationBarTitle(questionDetail.translatedTitle!,displayMode: .inline)
-        .font(.title)
-        .alert(isPresented: $isUpdate, content: {
-            Alert.init(title: Text("是否上传刚刚所录内容"), primaryButton: Alert.Button.cancel({
-                self.isUpdate = false
-            }), secondaryButton: Alert.Button.default(Text("OK"), action: {
-                print("开始上传")
-                print("recordfilePath==",recordfilePath)
-
-                
-                
-                ApiManager.updateAlgorithmRecord(titleSlug: recordfilePath).upload(filePath: recordfilePath) { (data, response, error) in
-                    print("data===",data)
-                    print("response===",response)
-                    print("error===",error)
-                }
-                self.isUpdate = false
-                
-            }))
-        })
-       
-        .onAppear(perform: {
-            getQuestionSubmission(titleSlug: questionDetail.questionslug)
-        })
+            .padding(15)
+            .navigationBarTitle(questionDetail.translatedTitle!,displayMode: .inline)
+            .font(.title)
+            .alert(isPresented: $isUpdate, content: {
+                Alert.init(title: Text("是否上传刚刚所录内容"), primaryButton: Alert.Button.cancel({
+                    self.isUpdate = false
+                }), secondaryButton: Alert.Button.default(Text("OK"), action: {
+                    print("开始上传")
+                    print("recordfilePath==",recordfilePath)
+                    
+                    ApiManager.updateAlgorithmRecord(titleSlug: recordfilePath).upload(filePath: recordfilePath) { (data, response, error) in
+                        
+                    }
+                    self.isUpdate = false
+                    
+                }))
+            })
+            .onAppear(perform: {
+                getQuestionSubmission(titleSlug: questionDetail.questionslug)
+            })
+        }.navigationBarHidden(true)
+        
     }
+    // MARK: -设置题目的字体大小
     func dealTheContentFont(text: String?) -> String {
         if let htmlStr = text {
-
+            
             if htmlStr.hasPrefix("</p>") {
                 let offsetIndex = htmlStr.index(htmlStr.startIndex, offsetBy: 4)
                 let offsetRange = offsetIndex..<htmlStr.endIndex
@@ -170,20 +163,18 @@ struct QuestionDetail: View {
                 let extra = "<p>  <font size=\(14)>"
                 return extra  + htmlStr + "</p>"
             }
-
+            
         }
         return ""
     }
-    
+    // MARK: - 获取关于本题的提交记录
     func getQuestionSubmission(titleSlug :String?) {
-        
-        
-        
+
         ApiManager.getQuestionSubmission(titleSlug: titleSlug!).request { (data, response, error) in
- 
+            
             guard let data = data else {return}
             if  let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String : Any] {
-
+                
                 
                 guard let submissions = dictionary["data"] as? [[String :Any]] else { return }
                 print(submissions)
@@ -191,52 +182,36 @@ struct QuestionDetail: View {
                 print(submissionModels)
                 
             }
-            
-            
+                        
         }
-    
         
     }
     
 }
 
-func timeStampToCurrennTime(timeStamp: Double) -> String {
-    //获取当前的时间戳
-    //    let currentTime = Date().timeIntervalSinceNow
-    //    //时间戳为毫秒级要 ／ 1000， 秒就不用除1000，参数带没带000
-    //    let timeSta:TimeInterval = TimeInterval(timeStamp / 1000)
-    //时间差
-    let reduceTime : TimeInterval = timeStamp
-    //时间差小于60秒
-    if reduceTime < 60 {
-        return "刚刚"
-    }
-    //时间差大于一分钟小于60分钟内
-    let mins = Int(reduceTime / 60)
-    if mins < 60 {
-        return "\(mins)分钟前"
-    }
-    //时间差大于一小时小于24小时内
-    let hours = Int(reduceTime / 3600)
-    if hours < 24 {
-        return "\(hours)小时前"
-    }
-    //时间差大于一天小于30天内
-    let days = Int(reduceTime / 3600 / 24)
-    if days < 30 {
-        return "\(days)天前"
-    }
-    //不满足以上条件直接返回日期
-    let date = NSDate(timeIntervalSince1970: timeStamp)
-    let dfmatter = DateFormatter()
-    //yyyy-MM-dd HH:mm:ss
-    dfmatter.dateFormat="yyyy年MM月dd日 HH:mm:ss"
-    return dfmatter.string(from: date as Date)
-
-}
 
 struct QuestionDetail_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionDetail( questionDetail: questionItemData!)
+        QuestionDetail( questionDetail: questionItemData!, down: Down(), showSelf: .constant(true))
     }
+}
+
+class DownLoadDelegateClass:NSObject ,URLSessionDataDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print("")
+    }
+    // 接收到服务器响应的时候调用该方法 completionHandler .allow 继续接收数据
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        print("开始响应...............")
+        completionHandler(.allow)
+    }
+    //接收到数据 可能调用多次
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        print("接收到数据...............")
+        
+    }
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+
+    }
+    
 }

@@ -106,6 +106,7 @@ struct LoginView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
                             .padding(.leading)
+                            
                         
                         SecureField("Password".uppercased(), text: $password)
                             .keyboardType(.default)

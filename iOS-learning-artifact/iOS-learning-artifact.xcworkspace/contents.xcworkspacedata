@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:iOS-learning-artifact.xcodeproj">
+      location = "group:/Users/longxd/Documents/iOS-learning-artifact-client/iOS-learning-artifact/SwiftUI-learning-artifact.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

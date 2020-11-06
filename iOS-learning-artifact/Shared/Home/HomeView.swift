@@ -116,6 +116,8 @@ struct HomeView: View {
                             }
                         }
                     }
+                LoadingView()
+                    .opacity(questionStore.questions.count == 0 ? 1 : 0)
 
             }
             

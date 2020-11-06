@@ -83,16 +83,11 @@ struct AlgorithmCourseView: View {
     @Binding var activeView : CGSize
     var index : Int
     var questionItems : [Question]
-    
-    
-    //  var bounds: GeometryProxy
-    var body: some View {
-        
-        
-        
-        ZStack(alignment: .top) {
 
-            
+    var body: some View {
+
+        ZStack(alignment: .top) {
+ 
             VStack {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 8.0) {
@@ -122,8 +117,8 @@ struct AlgorithmCourseView: View {
                         .background(Color.black)
                         .clipShape(Circle())
                         .opacity(show ? 1 : 0)
-                        
                         .offset(x: 2, y: -2)
+                        
                     }  .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
                         self.show = false
                         self.active = false
@@ -180,12 +175,7 @@ struct AlgorithmCourseView: View {
         }
         .frame(height: show ? screen.height : 280)
         .scaleEffect(1 - activeView.height/1000)
-//        .rotation3DEffect(
-//            Angle(degrees: Double(self.activeView.height / 10 )),
-//            axis: (x: 0.0, y: 10.0, z: 0.0)
-//
-//        )
-//        .hueRotation(Angle(degrees: Double(self.activeView.height)))
+
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
         .gesture(
             show ?

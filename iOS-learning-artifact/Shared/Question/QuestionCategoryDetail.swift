@@ -15,9 +15,8 @@ struct QuestionCategoryDetail: View {
     @Binding var activeIndex : Int
     
     var questionItems : [Question]
+    @State var showDetail = false
     
-    
-    //  var bounds: GeometryProxy
     var body: some View {
         
 
@@ -81,7 +80,7 @@ struct QuestionCategoryDetail: View {
                     ForEach(questionItems.indices,id:\.self){ index in
                         
                         NavigationLink(
-                            destination: QuestionDetail(questionDetail: questionItems[index]),
+                            destination: QuestionDetail(questionDetail: questionItems[index], down: Down(), showSelf: $showDetail),isActive: $showDetail ,
                             label: {
                                 QuestionRow(questionItem: questionItems[index], index: index)
                             })
