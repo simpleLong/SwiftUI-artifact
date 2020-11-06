@@ -8,16 +8,13 @@
 import SwiftUI
 import Foundation
 import AVFoundation
-
+var audioPlayer: AVAudioPlayer!
 
 struct LongPressButton : UIViewRepresentable{
     @Binding var recordState : RecordStateEnum
     @Binding var isUpdate : Bool
     var titleSlug :String!
 
-    
-    
-    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -26,9 +23,7 @@ struct LongPressButton : UIViewRepresentable{
         let image = UIImage(systemName: "mic", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))
         let imageView = UIImageView.init(image: image)
         let gesture = UILongPressGestureRecognizer.init(target: context.coordinator, action: #selector(context.coordinator.startRecord(gesture:)))
-        
 
-        
         imageView.addGestureRecognizer(gesture)
         imageView.isUserInteractionEnabled = true
         gesture.delegate = context.coordinator
@@ -50,10 +45,10 @@ struct LongPressButton : UIViewRepresentable{
         
         @objc func startRecord(gesture:UILongPressGestureRecognizer) -> Void {
             if gesture.state == .began {
-                print("开始了")
+                print("录音开始了")
                 let recordName = "/" + parent.titleSlug + ".wav"
                 
-                recordManage.file_path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! + recordName
+                recordManage.file_path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(recordName)
                 parent.recordState = RecordStateEnum.start
                 recordManage.beginRecord()
             }else if gesture.state == .cancelled{
@@ -61,14 +56,14 @@ struct LongPressButton : UIViewRepresentable{
             }else if gesture.state == .changed{
                 print("change")
             }else{
-                print("结束了")
+                print("录音结束了")
                 parent.recordState = RecordStateEnum.end
                 
                 recordManage.stopRecord()
                 parent.isUpdate = true
                 
                 recordfilePath = recordManage.file_path!
-                print(recordfilePath)
+                print(recordfilePath?.absoluteString)
                 
             }
         }
@@ -85,7 +80,7 @@ class RecordManager {
     var recorder: AVAudioRecorder?
     var player: AVAudioPlayer?
 
-    var file_path : String?//= NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
+    var file_path : URL?//= NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first
     
     
     //开始录音
@@ -112,7 +107,7 @@ class RecordManager {
         ];
         //开始录音
         do {
-            let url = URL(fileURLWithPath: file_path!)
+            let url = file_path!
             recorder = try AVAudioRecorder(url: url, settings: recordSetting)
             recorder!.prepareToRecord()
             recorder!.record()
@@ -142,7 +137,8 @@ class RecordManager {
     //播放
     func play() {
         do {
-            player = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: file_path!))
+           
+            player = try AVAudioPlayer(contentsOf: file_path!)
             print("歌曲长度：\(player!.duration)")
             player!.play()
         } catch let err {

@@ -8,8 +8,9 @@
 import SwiftUI
 import WebKit
 import ObjectMapper
-
-var recordfilePath = ""
+import Alamofire
+import AVFoundation
+var recordfilePath = URL.init(string: "")
 
 // MARK: -将WKWebVIEW 转化成SwiftUI 能用的类型
 struct WebLabel :UIViewRepresentable {
@@ -73,8 +74,26 @@ struct QuestionDetail: View {
                             .font(.subheadline)
                     }
                     .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
-                        
-                        
+                        let parameters: [String: String] = [
+                            "account":"18588409461","titleSlug":"mzm.dzfmwwkz.aac.p.m4a"
+                        ]
+                        let destination: DownloadRequest.Destination = { _, _ in
+                            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                            let fileURL = documentsURL.appendingPathComponent("1.m4a")
+
+                            print(fileURL.absoluteString)
+                            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+                        }
+                        AF.download("http://127.0.0.1:8000/get_question_record/", method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: nil, interceptor: nil, requestModifier: nil, to: destination).downloadProgress { progress in
+                            print("Download Progress: \(progress.fractionCompleted)")
+                        }
+                        .responseData { response in
+                            if let data = response.value {
+                                print("data===",data)
+                                playRecord()
+
+                            }
+                        }
                     })
                     
                     VStack(spacing:10) {
@@ -135,8 +154,9 @@ struct QuestionDetail: View {
                 }), secondaryButton: Alert.Button.default(Text("OK"), action: {
                     print("开始上传")
                     print("recordfilePath==",recordfilePath)
+                    let titleSlug = recordfilePath!.absoluteString
                     
-                    ApiManager.updateAlgorithmRecord(titleSlug: recordfilePath).upload(filePath: recordfilePath) { (data, response, error) in
+                    ApiManager.updateAlgorithmRecord(titleSlug: titleSlug).upload(filePath: titleSlug) { (data, response, error) in
                         
                     }
                     self.isUpdate = false
@@ -189,7 +209,15 @@ struct QuestionDetail: View {
     
 }
 
+func playRecord() -> Void {
+    sleep(5)
+    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    let fileURL = documentsURL.appendingPathComponent("1.m4a")
+    print("fileURL======",fileURL.absoluteString)
+    audioPlayer = try? AVAudioPlayer(contentsOf: fileURL)
 
+    audioPlayer.play()
+}
 struct QuestionDetail_Previews: PreviewProvider {
     static var previews: some View {
         QuestionDetail( questionDetail: questionItemData!, down: Down(), showSelf: .constant(true))

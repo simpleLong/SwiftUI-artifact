@@ -76,6 +76,7 @@
 		8A8C2DF825469DAC0037C62B /* LoginSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DF625469DAC0037C62B /* LoginSuccessView.swift */; };
 		8A8C2DFE25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
 		8A8C2DFF25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
+		8A94730B25555DB8004BF1CB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8A94730A25555DB8004BF1CB /* Alamofire */; };
 		8AD239CB25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
 		8AD239CC25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
 		B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */; };
@@ -129,7 +130,7 @@
 		8A658064254174390036E6E5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8A658074254175A00036E6E5 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		8A65807F254175ED0036E6E5 /* NetWorkingTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkingTool.swift; sourceTree = "<group>"; };
-		8A6580862541764E0036E6E5 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		8A6580862541764E0036E6E5 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8A658098254177A30036E6E5 /* SectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionView.swift; sourceTree = "<group>"; };
 		8A6580A325417E390036E6E5 /* AlgorithmListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmListView.swift; sourceTree = "<group>"; };
 		8A68BE0A2535528100B88C95 /* QuestionDetail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QuestionDetail.json; sourceTree = "<group>"; };
@@ -154,6 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A94730B25555DB8004BF1CB /* Alamofire in Frameworks */,
 				B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */,
 				8A8C2DED25469B340037C62B /* Lottie in Frameworks */,
 			);
@@ -449,6 +451,7 @@
 			name = "SwiftUI-learning-artifact (iOS)";
 			packageProductDependencies = (
 				8A8C2DEC25469B340037C62B /* Lottie */,
+				8A94730A25555DB8004BF1CB /* Alamofire */,
 			);
 			productName = "iOS-learning-artifact (iOS)";
 			productReference = 52F4CAD825122EC800BCBA9F /* SwiftUI-learning-artifact.app */;
@@ -543,6 +546,7 @@
 			mainGroup = 52F4CACB25122EC500BCBA9F;
 			packageReferences = (
 				8A8C2DEB25469B340037C62B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				8A94730925555DB8004BF1CB /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 52F4CAD925122EC800BCBA9F /* Products */;
 			projectDirPath = "";
@@ -1100,6 +1104,14 @@
 				minimumVersion = 3.1.8;
 			};
 		};
+		8A94730925555DB8004BF1CB /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1107,6 +1119,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8A8C2DEB25469B340037C62B /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		8A94730A25555DB8004BF1CB /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A94730925555DB8004BF1CB /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
