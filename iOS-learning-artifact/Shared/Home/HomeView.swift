@@ -24,7 +24,6 @@ struct HomeView: View {
                     GeometryReader { bounds in
                         ScrollView {
                             VStack {
-
                                     HStack(spacing: 12) {
                                         Text("Algorithm classification display")
                                             .modifier(CustomFontModifier(size: 18))
@@ -192,17 +191,4 @@ struct AvatarView: View {
         }
     }
 }
-//struct HomeBackgroundView: View {
-//    @Binding var showProfile: Bool
-//
-//    var body: some View {
-//        VStack {
-//            LinearGradient(gradient: Gradient(colors: [Color("background2"), Color("background1")]), startPoint: .top, endPoint: .bottom)
-//                .frame(height: 200)
-//            Spacer()
-//        }
-//        .background(Color("background1"))
-//        .clipShape(RoundedRectangle(cornerRadius: showProfile ? 30 : 0, style: .continuous))
-//        .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
-//    }
-//}
+

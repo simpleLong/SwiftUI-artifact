@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ObjectMapper
-struct QuestionResponse :Codable{
+struct QuestionResponse {
     var code :Int
     var data : QuestionData
     //var msg :String
@@ -15,7 +15,7 @@ struct QuestionResponse :Codable{
     
 }
 
-struct QuestionData :Codable{
+struct QuestionData {
     var userName :String
     var numSolved :Int
     var numTotal :Int
@@ -49,10 +49,10 @@ struct Stat :Codable {
     }
 
 }
-struct Question :Codable ,Identifiable ,Mappable {
+struct Question :Identifiable ,Mappable {
     
     
-    var id = UUID()
+    var id : UUID?
     
     var difficultyLabelColor : Color{
         guard let difficulty = difficulty else {

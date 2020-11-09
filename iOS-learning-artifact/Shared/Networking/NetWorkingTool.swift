@@ -71,8 +71,8 @@ extension ApiManager : TargetType {
     
     
     
-    static let host = "http://101.32.23.218:8000"
-    // static let host = "http://127.0.0.1:8000"
+   // static let host = "http://101.32.23.218:8000"
+     static let host = "http://127.0.0.1:8000"
     var baseURL: URL {
         return URL.init(string: ApiManager.host)!
     }
@@ -94,7 +94,11 @@ extension ApiManager : TargetType {
             break
         }
     }
-    
+
+    var url : URL {
+        let url = self.baseURL.appendingPathComponent(self.path)
+        return url
+    }
     var method: HTTPMethod {
         switch self {
         
@@ -113,8 +117,8 @@ extension ApiManager : TargetType {
     
     var parames: [String : String]? {
         var commonParames:[String:String] = [:]
-        if let account = UserDefaults.standard.value(forKey: "account") as? String {
-            commonParames["account"] = account
+        if CustomUserDefaults.account != "" {
+            commonParames["account"] = CustomUserDefaults.account
         }
         switch self {
         case .login(account: let account, password: let password):
@@ -134,7 +138,7 @@ extension ApiManager : TargetType {
     // MARK: -用来上传录音
     func upload(filePath: String ,completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> Void {
         let config = URLSessionConfiguration.default
-        let url = self.baseURL.appendingPathComponent(self.path)
+        
         var request = URLRequest(url: url)
         let session = URLSession(configuration: config)
         request.httpMethod = self.method.rawValue
@@ -170,49 +174,24 @@ extension ApiManager : TargetType {
         let task = session.uploadTask(with: request, from: httpbody) { (data, response, error) in
             
         }
-        //        激活请求任务
+
         task.resume()
-        
-        
-        
+
     }
-    // MARK: -下载录音
-    func downloadRecord(slug:String ,deleagte :DownLoadDelegateClass) -> URLSessionDownloadTask {
-        
-        
-        let sessionConfiguration = URLSessionConfiguration.default
-        let url = self.baseURL.appendingPathComponent(self.path)
-        var request = URLRequest(url: url)
-        request.httpMethod = self.method.rawValue
-        request.httpBody = try! JSONSerialization.data(withJSONObject: self.parames!, options: .prettyPrinted)
-        let downloadSession = URLSession(configuration: sessionConfiguration, delegate: deleagte, delegateQueue: OperationQueue.main)
-        
-        
-        let downloadTask = downloadSession.downloadTask(with: request)
-        
-        return downloadTask
-        
-        
-    }
-    
-    
+
     func request(completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> Void {
         let config = URLSessionConfiguration.default
-        let url = self.baseURL.appendingPathComponent(self.path)
         var request = URLRequest(url: url)
         let session = URLSession(configuration: config)
         request.httpMethod = self.method.rawValue
         
         request.httpBody = try! JSONSerialization.data(withJSONObject: self.parames!, options: .prettyPrinted)
         let task = session.dataTask(with: request) {  (data,response,error) in
-            
-            
-            
+      
             completionHandler(data,response,error)
-            
-            
+     
         }
-        //        激活请求任务
+
         task.resume()
         
         
@@ -231,7 +210,7 @@ class Api {
             guard let data = data else {return}
             let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
             guard let responsedata = dictionary?["data"] as? [String:Any] else {return}
-            print("responsedata===",responsedata)
+
             if error != nil {
                 completion(false)
             }else{
@@ -282,13 +261,13 @@ func dealTheOriginData(data: [String :Any],completion: @escaping ([Question],[Se
         }
         
     }
+    
     var sections : [Section] = []
     
     let translateDict = ["Hash Table": "哈希表", "Bit Manipulation": "位运算", "Tree": "树", "Binary Search": "二分查找", "Math": "数学", "Heap": "堆", "Backtracking": "回溯算法", "String": "字符串", "Greedy": "贪心算法", "Graph": "图", "Sort": "排序", "Linked List": "链表", "Design": "设计", "Divide and Conquer": "分治算法", "Sliding Window": "滑动窗口", "Two Pointers": "双指针", "Array": "数组", "Dynamic Programming": "动态规划", "Depth-first Search": "深度优先", "Stack": "栈", "Breadth-first Search": "广度优先", "Union Find": "并查集","Topological Sort":"拓扑排序","Trie":"单词查找树"]
     
     for (index,item)  in dict.enumerated() {
-        print("key===\(item.key),value===\(item.value)")
-        
+  
         let logoStr = item.key.replacingOccurrences(of: " ", with: "").lowercased()
         let imageName = "StarrySkybg\(index%9)"
         let section = Section(title: "标签分类为\(item.key)的算法题", subtitle: "\(item.value)道\(translateDict[item.key] ?? item.key )题", logo: logoStr, image: Image(imageName), color: LinearGradient(gradient: Gradient(colors: [gradients[index%14].color1, gradients[index%14].color2]), startPoint: .topLeading, endPoint: .bottomTrailing), shadowColor: gradients[index%14].color2,topicTag:item.key)
@@ -296,6 +275,8 @@ func dealTheOriginData(data: [String :Any],completion: @escaping ([Question],[Se
         
         
     }
-    print("dict====",dict)
+    sections = sections.sorted { (section1, section2) -> Bool in
+        section1.topicTag > section2.topicTag
+    }
     completion(questions,sections)
 }

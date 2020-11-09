@@ -10,12 +10,14 @@ import WebKit
 import ObjectMapper
 import Alamofire
 import AVFoundation
-var recordfilePath = URL.init(string: "")
+
+let recordfilePath = URL.init(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!)
 
 // MARK: -将WKWebVIEW 转化成SwiftUI 能用的类型
 struct WebLabel :UIViewRepresentable {
     var text:String
     func makeUIView(context: Context) -> WKWebView {
+        
         return WKWebView()
     }
     func updateUIView(_ uiView: WKWebView, context: Context) {
@@ -25,10 +27,7 @@ struct WebLabel :UIViewRepresentable {
     }
 }
 
-class Down: ObservableObject {
-    @Published  var downloadTask : URLSessionDownloadTask?
-    @Published  var downloaddelegate : DownLoadDelegateClass?
-}
+
 struct QuestionDetail: View {
     
     @State var contentText = ""
@@ -38,22 +37,19 @@ struct QuestionDetail: View {
     @State var recordState : RecordStateEnum = .noStart
     @State private var animationAmount: CGFloat = 1
     @State var isUpdate :Bool = false
-    @ObservedObject var down : Down
-    @Binding var showSelf: Bool
+    @EnvironmentObject var user: UserStore
+    @State var isShowRecordPlayBtn = false
+    @State var isAvplayerStart : Bool = false
+    
     
     
     
     var body: some View {
         ScrollView{
             
-            VStack(alignment: .leading, spacing: 10){
+            VStack(alignment: .leading, spacing: 5){
                 
-                Button(action: {
-                    self.showSelf = false
-                }) {
-                    Image("backIcon")
-                }
-                .frame(height: 40)
+
                 WebLabel.init(text: dealTheContentFont(text: questionDetail.translatedContent))
                     .frame(width: UIScreen.main.bounds.width-30, height: 400, alignment: .top)
                     .background(Color.red)
@@ -62,41 +58,31 @@ struct QuestionDetail: View {
                 
                 HStack {
                     
-                    Text("提交记录")
-                        .font(.subheadline)
-                        .padding()
-                    
-                    VStack {
-                        Image(systemName: "play.circle.fill").font(.system(size: 30, weight: .regular)).foregroundColor(.orange)
-                            .padding(2)
-                        
-                        Text("点击播放解题思路")
-                            .font(.subheadline)
-                    }
-                    .onTapGesture(count: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/, perform: {
-                        let parameters: [String: String] = [
-                            "account":"18588409461","titleSlug":"mzm.dzfmwwkz.aac.p.m4a"
-                        ]
-                        let destination: DownloadRequest.Destination = { _, _ in
-                            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                            let fileURL = documentsURL.appendingPathComponent("1.m4a")
+                    if isShowRecordPlayBtn {
 
-                            print(fileURL.absoluteString)
-                            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
-                        }
-                        AF.download("http://127.0.0.1:8000/get_question_record/", method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: nil, interceptor: nil, requestModifier: nil, to: destination).downloadProgress { progress in
-                            print("Download Progress: \(progress.fractionCompleted)")
-                        }
-                        .responseData { response in
-                            if let data = response.value {
-                                print("data===",data)
-                                playRecord()
+                        Button(action: {
+                            isAvplayerStart = !isAvplayerStart
+                            playRecord(titleSlug :questionDetail.questionslug!)
+                        }) {
+                            VStack {
+                                if isAvplayerStart == false {
+                                    Image(systemName: "play.circle.fill").font(.system(size: 30, weight: .regular)).foregroundColor(.orange)
+                                        .padding(1)
+                                }else{
+                                    Image(systemName: "pause.circle.fill").font(.system(size: 30, weight: .regular)).foregroundColor(.orange)
+                                }
 
+                                Text("点击播放解题思路")
+                                    .font(.subheadline)
                             }
-                        }
-                    })
+                        }.buttonStyle(PlainButtonStyle())
+                        Spacer()
+                    }
                     
-                    VStack(spacing:10) {
+                    if !isShowRecordPlayBtn {
+                        Spacer()
+                    }
+                    VStack(spacing:5) {
                         Record(recordState: $recordState, isUpdate: $isUpdate, slug: questionDetail.questionslug!)
                         
                         Text("长按记录解题思路")
@@ -106,10 +92,19 @@ struct QuestionDetail: View {
                         
                     }
                     .padding()
+                    if !isShowRecordPlayBtn {
+                        Spacer()
+                    }
                     
                 }
                 
                 Divider()
+                Text("提交记录")
+                    .font(.subheadline)
+                    .padding(.leading)
+                    .opacity(user.isLogged == true ? 1 : 0)
+                Divider()
+                    .opacity(user.isLogged == true ? 1 : 0)
                 
                 ScrollView() {
                     ForEach(submissionModels) { item in
@@ -153,10 +148,10 @@ struct QuestionDetail: View {
                     self.isUpdate = false
                 }), secondaryButton: Alert.Button.default(Text("OK"), action: {
                     print("开始上传")
-                    print("recordfilePath==",recordfilePath)
-                    let titleSlug = recordfilePath!.absoluteString
+                    let filePath = recordfilePath!.absoluteString + "/" + questionDetail.questionslug! + ".wav"
+                    self.isShowRecordPlayBtn = true
                     
-                    ApiManager.updateAlgorithmRecord(titleSlug: titleSlug).upload(filePath: titleSlug) { (data, response, error) in
+                    ApiManager.updateAlgorithmRecord(titleSlug: questionDetail.questionslug!).upload(filePath: filePath) { (data, response, error) in
                         
                     }
                     self.isUpdate = false
@@ -164,9 +159,14 @@ struct QuestionDetail: View {
                 }))
             })
             .onAppear(perform: {
-                getQuestionSubmission(titleSlug: questionDetail.questionslug)
+                if user.isLogged {
+                    getQuestionSubmission(titleSlug: questionDetail.questionslug)
+                    
+                }
+                getTheRecordWithQuestion(titleSlug: questionDetail.questionslug!)
+                
             })
-        }.navigationBarHidden(true)
+        }
         
     }
     // MARK: -设置题目的字体大小
@@ -189,7 +189,7 @@ struct QuestionDetail: View {
     }
     // MARK: - 获取关于本题的提交记录
     func getQuestionSubmission(titleSlug :String?) {
-
+        
         ApiManager.getQuestionSubmission(titleSlug: titleSlug!).request { (data, response, error) in
             
             guard let data = data else {return}
@@ -202,44 +202,76 @@ struct QuestionDetail: View {
                 print(submissionModels)
                 
             }
-                        
+            
         }
         
     }
     
-}
-
-func playRecord() -> Void {
-    sleep(5)
-    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let fileURL = documentsURL.appendingPathComponent("1.m4a")
-    print("fileURL======",fileURL.absoluteString)
-    audioPlayer = try? AVAudioPlayer(contentsOf: fileURL)
-
-    audioPlayer.play()
-}
-struct QuestionDetail_Previews: PreviewProvider {
-    static var previews: some View {
-        QuestionDetail( questionDetail: questionItemData!, down: Down(), showSelf: .constant(true))
-    }
-}
-
-class DownLoadDelegateClass:NSObject ,URLSessionDataDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("")
-    }
-    // 接收到服务器响应的时候调用该方法 completionHandler .allow 继续接收数据
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        print("开始响应...............")
-        completionHandler(.allow)
-    }
-    //接收到数据 可能调用多次
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        print("接收到数据...............")
+    func getTheRecordWithQuestion(titleSlug :String) -> Void {
         
-    }
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        let recordName = "/" + titleSlug + ".wav"
+        
+        
+        guard let documentsURL = recordfilePath?.appendingPathComponent(recordName) else { return }
 
+          audioPlayer = try? AVAudioPlayer(contentsOf: documentsURL)
+        if  audioPlayer != nil {
+            print("有录音")
+            isShowRecordPlayBtn = true
+        }else{
+            let parameters: [String: String] = [
+                "titleSlug":titleSlug
+            ]
+            let destination: DownloadRequest.Destination = { _, _ in
+                
+                print(documentsURL.absoluteString)
+                return (documentsURL, [.removePreviousFile, .createIntermediateDirectories])
+            }
+            AF.download(ApiManager.getAlgorithmRecord(titleSlug: titleSlug).url.absoluteString, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default, headers: nil, interceptor: nil, requestModifier: nil, to: destination).downloadProgress { progress in
+                print("Download Progress: \(progress.fractionCompleted)")
+            }
+            .responseData { response in
+                if let data = response.value {
+                    print("data===",data)
+                    isShowRecordPlayBtn = true
+                    
+                }
+            }
+        }
+        
+        
+        
     }
     
 }
+
+func playRecord(titleSlug :String) -> Void {
+    
+    let recordName = "/" + titleSlug + ".wav"
+    
+    guard let documentsURL = recordfilePath?.appendingPathComponent(recordName) else { return }
+
+
+        do {
+            try  audioPlayer =  AVAudioPlayer(contentsOf: documentsURL)
+            if audioPlayer.isPlaying {
+                audioPlayer.pause()
+            }else{
+                audioPlayer.play()
+            }
+            
+
+        } catch  {
+            print("错误")
+        }
+
+    
+}
+
+struct QuestionDetail_Previews: PreviewProvider {
+    static var previews: some View {
+        QuestionDetail( questionDetail: questionItemData!)
+    }
+}
+
+

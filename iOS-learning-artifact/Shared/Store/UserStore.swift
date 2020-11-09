@@ -9,9 +9,10 @@ import SwiftUI
 import Combine
 
 class UserStore: ObservableObject {
-    @Published var isLogged: Bool = UserDefaults.standard.bool(forKey: "isLogged") {
+    @Published var isLogged: Bool = CustomUserDefaults.isLoggedIn {
         didSet {
-            UserDefaults.standard.set(self.isLogged, forKey: "isLogged")
+//            UserDefaults.standard.set(self.isLogged, forKey: "isLogged")
+            CustomUserDefaults.isLoggedIn = self.isLogged
         }
     }
     @Published var showLogin = false

@@ -48,7 +48,8 @@ struct LongPressButton : UIViewRepresentable{
                 print("录音开始了")
                 let recordName = "/" + parent.titleSlug + ".wav"
                 
-                recordManage.file_path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(recordName)
+                recordManage.file_path = recordfilePath?.appendingPathComponent(recordName)
+                  //  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(recordName)
                 parent.recordState = RecordStateEnum.start
                 recordManage.beginRecord()
             }else if gesture.state == .cancelled{
@@ -62,7 +63,7 @@ struct LongPressButton : UIViewRepresentable{
                 recordManage.stopRecord()
                 parent.isUpdate = true
                 
-                recordfilePath = recordManage.file_path!
+             //   recordfilePath = recordManage.file_path!
                 print(recordfilePath?.absoluteString)
                 
             }
@@ -139,7 +140,7 @@ class RecordManager {
         do {
            
             player = try AVAudioPlayer(contentsOf: file_path!)
-            print("歌曲长度：\(player!.duration)")
+            print("录音长度：\(player!.duration)")
             player!.play()
         } catch let err {
             print("播放失败:\(err.localizedDescription)")
@@ -164,12 +165,14 @@ struct Record: View {
         
         ZStack {
             LongPressButton(recordState: $recordState, isUpdate: $isUpdate ,titleSlug: slug)
-                .frame(width: 25, height: 25, alignment: .center)
+                .frame(width: 30, height: 30, alignment: .center)
+
                 .background(
                     Circle()
                         
                         .strokeBorder(Color.red)
-                        .frame(width: recordState == RecordStateEnum.start ? 75 : 40, height: recordState == RecordStateEnum.start ? 75 : 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        .frame(width: recordState == RecordStateEnum.start ? 65 : 45, height: recordState == RecordStateEnum.start ? 65 : 45, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
                         .opacity(recordState == RecordStateEnum.start ? 1 : 0)
                         
                         .animation(recordState == .start ? Animation.easeIn(duration: 1).repeatForever() : nil))

@@ -77,6 +77,8 @@
 		8A8C2DFE25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
 		8A8C2DFF25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
 		8A94730B25555DB8004BF1CB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8A94730A25555DB8004BF1CB /* Alamofire */; };
+		8ACA5D662558FA8E00F320FC /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA5D652558FA8E00F320FC /* UserDefault.swift */; };
+		8ACA5D672558FA8E00F320FC /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA5D652558FA8E00F320FC /* UserDefault.swift */; };
 		8AD239CB25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
 		8AD239CC25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
 		B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */; };
@@ -146,6 +148,7 @@
 		8A8C2DE2254686AA0037C62B /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		8A8C2DF625469DAC0037C62B /* LoginSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessView.swift; sourceTree = "<group>"; };
 		8A8C2DFD25469DE10037C62B /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		8ACA5D652558FA8E00F320FC /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		8AD239CA25551D330018BE43 /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
 		BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_learning_artifact__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -320,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				8A5D703B2532FD75009F2A32 /* Helper.swift */,
+				8ACA5D652558FA8E00F320FC /* UserDefault.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -650,6 +654,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ACA5D662558FA8E00F320FC /* UserDefault.swift in Sources */,
 				8A8C2DA8254669890037C62B /* QuestionCategoryDetail.swift in Sources */,
 				8A0828982533ED9500DAC0A4 /* QuestionRow.swift in Sources */,
 				8A658075254175A00036E6E5 /* DataStore.swift in Sources */,
@@ -685,6 +690,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ACA5D672558FA8E00F320FC /* UserDefault.swift in Sources */,
 				8A8C2DA9254669890037C62B /* QuestionCategoryDetail.swift in Sources */,
 				8A0828992533ED9500DAC0A4 /* QuestionRow.swift in Sources */,
 				8A658076254175A00036E6E5 /* DataStore.swift in Sources */,

@@ -20,7 +20,7 @@ let questionData =  Question.init(JSON: jsonstr)
 struct QuestionRow: View {
     
     
-    var questionItem : Question? =   Question.init(JSON: jsonstr)
+    var questionItem : Question?
     var index : Int
     
     var body: some View {

@@ -72,7 +72,7 @@ struct AlgorithListView :View {
     }
     
 }
-var questionItemData : Question? =  Question.init(JSON: jsonstr)  //Question.init(JSONString: jsonstr)
+var questionItemData : Question? =  Question.init(JSON: jsonstr)  
 
 struct AlgorithmCourseView: View {
     

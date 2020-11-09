@@ -15,7 +15,7 @@ struct QuestionCategoryDetail: View {
     @Binding var activeIndex : Int
     
     var questionItems : [Question]
-    @State var showDetail = false
+ //   @State var showDetail = false
     
     var body: some View {
         
@@ -80,7 +80,7 @@ struct QuestionCategoryDetail: View {
                     ForEach(questionItems.indices,id:\.self){ index in
                         
                         NavigationLink(
-                            destination: QuestionDetail(questionDetail: questionItems[index], down: Down(), showSelf: $showDetail),isActive: $showDetail ,
+                            destination: QuestionDetail(questionDetail: questionItems[index]) ,
                             label: {
                                 QuestionRow(questionItem: questionItems[index], index: index)
                             })
@@ -93,6 +93,7 @@ struct QuestionCategoryDetail: View {
         }
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
+
     }
 }
 
