@@ -8,7 +8,8 @@
 import SwiftUI
 import Foundation
 import AVFoundation
-var audioPlayer: AVAudioPlayer!
+
+var audioPlayer: AVAudioPlayer?
 
 struct LongPressButton : UIViewRepresentable{
     @Binding var recordState : RecordStateEnum

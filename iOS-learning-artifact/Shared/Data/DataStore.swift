@@ -11,18 +11,14 @@ import Combine
 
 
 class QuestionStore: ObservableObject {
+    
     @Published var questions : [Question] = []
+
+}
+
+class SectionsStore: ObservableObject {
+  
     @Published var sections : [Section] = []
-    
-    init() {
-        getquestions()
-    }
-    func getquestions() {
-        Api().getquestions { (questions,sections) in
-            self.questions = questions
-            self.sections = sections
-        }
-    }
-    
+
 
 }

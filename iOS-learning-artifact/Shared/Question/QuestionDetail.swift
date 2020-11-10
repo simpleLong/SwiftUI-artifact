@@ -12,7 +12,9 @@ import Alamofire
 import AVFoundation
 
 let recordfilePath = URL.init(string: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!)
-
+/// 直接放在View里面会导致View的navigationBar无法正常显示,暂时还没有找到解决方法
+/// 播放器的代理,当播放完毕后,会改变状态,更改播放按钮
+var audioDelegate =  RecordDelegate()
 // MARK: -将WKWebVIEW 转化成SwiftUI 能用的类型
 struct WebLabel :UIViewRepresentable {
     var text:String
@@ -27,7 +29,6 @@ struct WebLabel :UIViewRepresentable {
     }
 }
 
-
 struct QuestionDetail: View {
     
     @State var contentText = ""
@@ -39,16 +40,13 @@ struct QuestionDetail: View {
     @State var isUpdate :Bool = false
     @EnvironmentObject var user: UserStore
     @State var isShowRecordPlayBtn = false
-    @State var isAvplayerStart : Bool = false
+    @State var avplayerState: AudioPlayerState = .notStart
     
-    
-    
-    
+
     var body: some View {
         ScrollView{
             
             VStack(alignment: .leading, spacing: 5){
-                
 
                 WebLabel.init(text: dealTheContentFont(text: questionDetail.translatedContent))
                     .frame(width: UIScreen.main.bounds.width-30, height: 400, alignment: .top)
@@ -59,19 +57,22 @@ struct QuestionDetail: View {
                 HStack {
                     
                     if isShowRecordPlayBtn {
-
+                        
                         Button(action: {
-                            isAvplayerStart = !isAvplayerStart
+                            
+                            self.avplayerState = self.avplayerState.changeState()
                             playRecord(titleSlug :questionDetail.questionslug!)
+                            
                         }) {
-                            VStack {
-                                if isAvplayerStart == false {
+                            VStack {// MARK: -播放按钮
+                                if avplayerState != .isPlay {
                                     Image(systemName: "play.circle.fill").font(.system(size: 30, weight: .regular)).foregroundColor(.orange)
                                         .padding(1)
                                 }else{
                                     Image(systemName: "pause.circle.fill").font(.system(size: 30, weight: .regular)).foregroundColor(.orange)
+                                        .padding(1)
                                 }
-
+                                
                                 Text("点击播放解题思路")
                                     .font(.subheadline)
                             }
@@ -83,8 +84,8 @@ struct QuestionDetail: View {
                         Spacer()
                     }
                     VStack(spacing:5) {
+                        // MARK: -录音按钮
                         Record(recordState: $recordState, isUpdate: $isUpdate, slug: questionDetail.questionslug!)
-                        
                         Text("长按记录解题思路")
                             .font(.subheadline)
                             .opacity(recordState == .start ? 0 : 1)
@@ -95,7 +96,6 @@ struct QuestionDetail: View {
                     if !isShowRecordPlayBtn {
                         Spacer()
                     }
-                    
                 }
                 
                 Divider()
@@ -105,7 +105,6 @@ struct QuestionDetail: View {
                     .opacity(user.isLogged == true ? 1 : 0)
                 Divider()
                     .opacity(user.isLogged == true ? 1 : 0)
-                
                 ScrollView() {
                     ForEach(submissionModels) { item in
                         VStack {
@@ -167,10 +166,10 @@ struct QuestionDetail: View {
                 
             })
         }
-        
     }
     // MARK: -设置题目的字体大小
     func dealTheContentFont(text: String?) -> String {
+
         if let htmlStr = text {
             
             if htmlStr.hasPrefix("</p>") {
@@ -206,17 +205,15 @@ struct QuestionDetail: View {
         }
         
     }
-    
+// MARK: -判断有没有记录这道题的算法思路录音
     func getTheRecordWithQuestion(titleSlug :String) -> Void {
         
         let recordName = "/" + titleSlug + ".wav"
-        
-        
-        guard let documentsURL = recordfilePath?.appendingPathComponent(recordName) else { return }
 
-          audioPlayer = try? AVAudioPlayer(contentsOf: documentsURL)
-        if  audioPlayer != nil {
-            print("有录音")
+        guard let documentsURL = recordfilePath?.appendingPathComponent(recordName) else { return }
+        
+        if let _ = try? AVAudioPlayer(contentsOf: documentsURL) {
+
             isShowRecordPlayBtn = true
         }else{
             let parameters: [String: String] = [
@@ -238,36 +235,62 @@ struct QuestionDetail: View {
                 }
             }
         }
-        
-        
-        
     }
     
-}
-
-func playRecord(titleSlug :String) -> Void {
-    
-    let recordName = "/" + titleSlug + ".wav"
-    
-    guard let documentsURL = recordfilePath?.appendingPathComponent(recordName) else { return }
-
-
+     func playRecord(titleSlug :String) -> Void {
+        
+        let recordName = "/" + titleSlug + ".wav"
+        
+        guard let documentsURL = recordfilePath?.appendingPathComponent(recordName) else { return }
+        
         do {
             try  audioPlayer =  AVAudioPlayer(contentsOf: documentsURL)
-            if audioPlayer.isPlaying {
-                audioPlayer.pause()
-            }else{
-                audioPlayer.play()
+
+            audioDelegate.changeAudioPlayerBlock = { state in
+                self.avplayerState = state
+
             }
-            
-
+            audioPlayer?.delegate = audioDelegate
+            if audioPlayer?.isPlaying == true {
+                audioPlayer?.pause()
+            }else{
+                audioPlayer?.play()
+            }
+   
         } catch  {
-            print("错误")
+            print("初始化播放器失败")
         }
-
-    
+    }
 }
 
+
+enum AudioPlayerState {
+    case notStart
+    case isPlay
+    case isPause
+    case isFinish
+    
+    func changeState() -> AudioPlayerState {
+        switch self {
+        case .notStart,.isFinish,.isPause:
+            return .isPlay
+        case .isPlay:
+            return .isPause
+        }
+    }
+}
+
+class RecordDelegate : NSObject ,AVAudioPlayerDelegate{
+    
+    var changeAudioPlayerBlock : ((AudioPlayerState) -> ())?
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+
+        if self.changeAudioPlayerBlock != nil {
+            self.changeAudioPlayerBlock!(.isFinish)
+        }
+    }
+}
 struct QuestionDetail_Previews: PreviewProvider {
     static var previews: some View {
         QuestionDetail( questionDetail: questionItemData!)

@@ -80,7 +80,7 @@ struct QuestionCategoryDetail: View {
                     ForEach(questionItems.indices,id:\.self){ index in
                         
                         NavigationLink(
-                            destination: QuestionDetail(questionDetail: questionItems[index]) ,
+                            destination: QuestionDetail(questionDetail: questionItems[index]),
                             label: {
                                 QuestionRow(questionItem: questionItems[index], index: index)
                             })

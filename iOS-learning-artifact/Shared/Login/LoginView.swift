@@ -28,27 +28,33 @@ struct LoginView: View {
         
         Api().login(account: account, password: password) { isLoginSuccess in
 
-            updateQuestionsBlock(isLoginSuccess)
-
-            self.isLoading = false
-
-            if isLoginSuccess == false {
-               
-                self.showAlert = true
-            } else {
+            DispatchQueue.main.async {
 
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.isSuccessful = true
-                    self.user.isLogged = true
+                
 
-                    CustomUserDefaults.account = account
-                    self.account = ""
-                    self.password = ""
-                    self.isSuccessful = false
-                    self.user.showLogin = false
+                if isLoginSuccess == false {
+                   
+                    self.showAlert = true
+                } else {
+
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.user.isLogged = true
+
+                        CustomUserDefaults.account = account
+                        updateQuestionsBlock(isLoginSuccess)
+                        self.isLoading = false
+                        self.isSuccessful = true
+
+                        self.account = ""
+                        self.password = ""
+                        self.isSuccessful = false
+                        self.user.showLogin = false
+                    }
                 }
             }
+
         }
     }
     

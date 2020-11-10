@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var questionStore  = QuestionStore()
+    @ObservedObject var sectionStore =  SectionsStore()
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @State var active = false
     @State var activeIndex = -1
@@ -16,114 +17,137 @@ struct HomeView: View {
     @Binding var showProfile: Bool
     @State var viewState = CGSize.zero
     @EnvironmentObject var user: UserStore
+    
     var body: some View {
-
-            
+        
         NavigationView {
             ZStack {
-                    GeometryReader { bounds in
-                        ScrollView {
-                            VStack {
-                                    HStack(spacing: 12) {
-                                        Text("Algorithm classification display")
-                                            .modifier(CustomFontModifier(size: 18))
-                                            .padding()
-                                        
-                                        Spacer()
-                                        
-                                        AvatarView(showProfile: self.$showProfile)
-                                    }
-
-                                // MARK: -3d scrollView 滑动栏
-                                ScrollView(.horizontal, showsIndicators: false){
-                                    HStack(spacing: 20) {
-                                        ForEach(questionStore.sections) { item in
-                                            GeometryReader { geometry in
-                                                SectionView(section: item)
-                                                    .rotation3DEffect(Angle(degrees:
-                                                                                Double(geometry.frame(in: .global).minX - 30) / -getAngleMultiplier(bounds: bounds)
-                                                    ), axis: (x: 0, y: 10, z: 0))
-                                            }
-                                            .frame(width: 275, height: 275)
-                                        }
-                                    }
-                                    .padding(30)
-                                    .padding(.bottom, 30)
-                                }
-                                .offset(y: -30)
+                GeometryReader { bounds in
+                    ScrollView {
+                        VStack {
+                            HStack(spacing: 12) {
+                                Text("Algorithm classification display")
+                                    .modifier(CustomFontModifier(size: 18))
+                                    .padding()
                                 
-                                HStack(spacing:15) {
-                                    Text("Algorithm Category")
-                                        .padding(15)
-                                        .font(.headline)
-                                    Spacer()
-                                }
-                                .offset(y: -50)
+                                Spacer()
                                 
-                                VStack(spacing: 30) {
-                                    ForEach(questionStore.sections.indices, id: \.self) { index in
-                                        GeometryReader { geometry in
-                                            
-                                            AlgorithmCourseView(course: questionStore.sections[index], show: self.$questionStore.sections[index].show,
-                                                                active: $active,
-                                                                activeIndex: $activeIndex,
-                                                                activeView: $activeView,
-                                                                index: index,
-                                                                questionItems: getTheSectionQuestions(questionStore.questions, self.questionStore.sections[index]))
-                                                .offset(y: self.questionStore.sections[index].show ? -geometry.frame(in: .global).minY : 0)
-                                                .opacity(self.activeIndex != index && self.active ? 0 : 1)
-                                                .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
-                                                .offset(x: self.activeIndex != index && self.active ? bounds.size.width : 0)
-                                            
-                                        }
-                                        .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
-                                        .frame(maxWidth: self.questionStore.sections[index].show ? 712 : getCardWidth(bounds: bounds))
-                                        .zIndex(self.questionStore.sections[index].show ? 1 : 0)
-                                    }
-                                }
-                                .padding(.bottom, 300)
-                                .offset(y: -60)
-                                
+                                AvatarView(showProfile: self.$showProfile)
                             }
+                            
+                            // MARK: -3d scrollView 滑动栏
+                            ScrollView(.horizontal, showsIndicators: false){
+                                HStack(spacing: 20) {
+                                    ForEach(sectionStore.sections) { item in
+                                        GeometryReader { geometry in
+                                            SectionView(section: item)
+                                                .rotation3DEffect(Angle(degrees:
+                                                                            Double(geometry.frame(in: .global).minX - 30) / -getAngleMultiplier(bounds: bounds)
+                                                ), axis: (x: 0, y: 10, z: 0))
+                                        }
+                                        .frame(width: 275, height: 275)
+                                    }
+                                }
+                                .padding(30)
+                                .padding(.bottom, 30)
+                            }
+                            .offset(y: -30)
+                            
+                            HStack(spacing:15) {
+                                Text("Algorithm Category")
+                                    .padding(15)
+                                    .font(.headline)
+                                Spacer()
+                            }
+                            .offset(y: -50)
+                            
+                            VStack(spacing: 30) {
+                                ForEach(sectionStore.sections.indices, id: \.self) { index in
+                                    GeometryReader { geometry in
+                                        
+                                        AlgorithmCourseView(course: sectionStore.sections[index], show: self.$sectionStore.sections[index].show,
+                                                            active: $active,
+                                                            activeIndex: $activeIndex,
+                                                            activeView: $activeView,
+                                                            index: index,
+                                                            questionItems: getTheSectionQuestions(questionStore.questions, self.sectionStore.sections[index]))
+                                            .offset(y: self.sectionStore.sections[index].show ? -geometry.frame(in: .global).minY : 0)
+                                            .opacity(self.activeIndex != index && self.active ? 0 : 1)
+                                            .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
+                                            .offset(x: self.activeIndex != index && self.active ? bounds.size.width : 0)
+                                        
+                                    }
+                                    .frame(height: self.horizontalSizeClass == .regular ? 80 : 280)
+                                    .frame(maxWidth: self.sectionStore.sections[index].show ? 712 : getCardWidth(bounds: bounds))
+                                    .zIndex(self.sectionStore.sections[index].show ? 1 : 0)
+                                }
+                            }
+                            .padding(.bottom, 300)
+                            .offset(y: -60)
+                            
                         }
                     }
-                    // MARK: -显示登陆页面
-                    if user.showLogin {
-                        ZStack {
-                            LoginView(updateQuestionsBlock: { isLoginSuccess in
-                                
-                                if isLoginSuccess {
-                                    questionStore.getquestions()
-                                }
-                                
-                            })
+                }
+                // MARK: -显示登陆页面
+                if user.showLogin {
+                    ZStack {
+                        LoginView(updateQuestionsBlock: { isLoginSuccess in
                             
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    Image(systemName: "xmark")
+                            if isLoginSuccess {
+                                self.getquestions()
+                            }
+                            
+                        })
+                        
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Image(systemName: "xmark")
                                     .frame(width: 36, height: 36)
                                     .foregroundColor(.white)
                                     .background(Color.black)
-                                        .clipShape(Circle())
-                                }
-                                Spacer()
+                                    .clipShape(Circle())
                             }
-                            .padding()
-                            .onTapGesture {
-                                self.user.showLogin = false
-                            }
+                            Spacer()
+                        }
+                        .padding()
+                        .onTapGesture {
+                            self.user.showLogin = false
                         }
                     }
+                }
                 LoadingView()
                     .opacity(questionStore.questions.count == 0 ? 1 : 0)
-
+                
+                
+                
             }
             
             .navigationBarHidden(true)
+            .onAppear(){
+                if questionStore.questions.count == 0{
+                    self.getquestions()
+                }
+                
+            }
         }
     }
+    
+    func getquestions() {
+        
+        Api().getquestions { questions,sections,isLoginStatusValid  in
+            
+            
+            questionStore.questions = questions
+            sectionStore.sections = sections
+            
+            
+        }
+        
+    }
 }
+
+
 func getTheSectionQuestions( _ questions:[Question],_ section: Section) -> [Question] {
     var res : [Question] = []
     for question in questions {
@@ -168,23 +192,23 @@ struct AvatarView: View {
         VStack {
             if user.isLogged {
                 Button(action: { self.showProfile.toggle() }) {
-                Image("avatar")
-                    .renderingMode(.original)
-                    .resizable()
-                    .frame(width: 36, height: 36)
-                    .clipShape(Circle())
-                    .padding()
+                    Image("avatar")
+                        .renderingMode(.original)
+                        .resizable()
+                        .frame(width: 36, height: 36)
+                        .clipShape(Circle())
+                        .padding()
                 }
             } else {
                 Button(action: { self.user.showLogin.toggle() }) {
-                Image(systemName: "person")
-                    .foregroundColor(.primary)
-                    .font(.system(size: 16, weight: .medium))
-                    .frame(width: 36, height: 36)
-                    .background(Color("background3"))
-                    .clipShape(Circle())
-                    .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+                    Image(systemName: "person")
+                        .foregroundColor(.primary)
+                        .font(.system(size: 16, weight: .medium))
+                        .frame(width: 36, height: 36)
+                        .background(Color("background3"))
+                        .clipShape(Circle())
+                        .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
                     
                 }.padding()
             }

@@ -71,8 +71,8 @@ extension ApiManager : TargetType {
     
     
     
-   // static let host = "http://101.32.23.218:8000"
-     static let host = "http://127.0.0.1:8000"
+    static let host = "http://101.32.23.218:8000"
+   //  static let host = "http://127.0.0.1:8000"
     var baseURL: URL {
         return URL.init(string: ApiManager.host)!
     }
@@ -227,17 +227,19 @@ class Api {
     
     
     
-    func getquestions(completion: @escaping ([Question],[Section]) -> ()) {
+    func getquestions(completion: @escaping ([Question],[Section],Bool) -> ()) {
         
         
         ApiManager.getquestions.request { (data,respones,error) in
             
             guard let data = data else {return}
             let dictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String :Any]
+            print("dictionary===",dictionary)
             guard let responsedata = dictionary?["data"] as? [String:Any] else {return}
+            guard let isLoginStatusValid = responsedata["isLogin"] as? Bool else {return}
             dealTheOriginData(data: responsedata) { (questions, sections) in
                 DispatchQueue.main.async {
-                    completion(questions,sections)
+                    completion(questions,sections, isLoginStatusValid)
                 }
             }
         }
@@ -276,7 +278,7 @@ func dealTheOriginData(data: [String :Any],completion: @escaping ([Question],[Se
         
     }
     sections = sections.sorted { (section1, section2) -> Bool in
-        section1.topicTag > section2.topicTag
+        section1.topicTag < section2.topicTag
     }
     completion(questions,sections)
 }
