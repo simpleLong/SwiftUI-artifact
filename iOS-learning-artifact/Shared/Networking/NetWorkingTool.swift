@@ -71,8 +71,8 @@ extension ApiManager : TargetType {
     
     
     
-   // static let host = "http://101.32.23.218:8000"
-     static let host = "http://127.0.0.1:8000"
+    static let host = "http://101.32.23.218:8000"
+  //   static let host = "http://127.0.0.1:8000"
     var baseURL: URL {
         return URL.init(string: ApiManager.host)!
     }
