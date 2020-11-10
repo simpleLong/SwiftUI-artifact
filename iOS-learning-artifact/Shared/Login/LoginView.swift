@@ -13,7 +13,7 @@ struct LoginView: View {
     @State var password = ""
     @State var isFocused = false
     @State var showAlert = false
-    @State var alertMessage = "Something went wrong."
+    @State var alertMessage = "账号密码错误."
     @State var isLoading = false
     @State var isSuccessful = false
     @EnvironmentObject var user: UserStore
@@ -29,9 +29,6 @@ struct LoginView: View {
         Api().login(account: account, password: password) { isLoginSuccess in
 
             DispatchQueue.main.async {
-
-
-                
 
                 if isLoginSuccess == false {
                    
