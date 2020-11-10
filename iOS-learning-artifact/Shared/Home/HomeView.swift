@@ -190,16 +190,16 @@ struct AvatarView: View {
     
     var body: some View {
         VStack {
-            if user.isLogged {
-                Button(action: { self.showProfile.toggle() }) {
-                    Image("avatar")
-                        .renderingMode(.original)
-                        .resizable()
-                        .frame(width: 36, height: 36)
-                        .clipShape(Circle())
-                        .padding()
-                }
-            } else {
+//            if user.isLogged {
+//                Button(action: { self.showProfile.toggle() }) {
+//                    Image("avatar")
+//                        .renderingMode(.original)
+//                        .resizable()
+//                        .frame(width: 36, height: 36)
+//                        .clipShape(Circle())
+//                        .padding()
+//                }
+//            } else {
                 Button(action: { self.user.showLogin.toggle() }) {
                     Image(systemName: "person")
                         .foregroundColor(.primary)
@@ -211,7 +211,7 @@ struct AvatarView: View {
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
                     
                 }.padding()
-            }
+           // }
         }
     }
 }
