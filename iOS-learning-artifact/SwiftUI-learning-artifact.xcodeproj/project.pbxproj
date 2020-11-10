@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,12 +71,10 @@
 		8A8C2DE4254686AA0037C62B /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A8C2DE1254686AA0037C62B /* loading.json */; };
 		8A8C2DE5254686AA0037C62B /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A8C2DE2254686AA0037C62B /* success.json */; };
 		8A8C2DE6254686AA0037C62B /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A8C2DE2254686AA0037C62B /* success.json */; };
-		8A8C2DED25469B340037C62B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8A8C2DEC25469B340037C62B /* SwiftPackageProductDependency */; };
 		8A8C2DF725469DAC0037C62B /* LoginSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DF625469DAC0037C62B /* LoginSuccessView.swift */; };
 		8A8C2DF825469DAC0037C62B /* LoginSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DF625469DAC0037C62B /* LoginSuccessView.swift */; };
 		8A8C2DFE25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
 		8A8C2DFF25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
-		8A94730B25555DB8004BF1CB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8A94730A25555DB8004BF1CB /* SwiftPackageProductDependency */; };
 		8ACA5D662558FA8E00F320FC /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA5D652558FA8E00F320FC /* UserDefault.swift */; };
 		8ACA5D672558FA8E00F320FC /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA5D652558FA8E00F320FC /* UserDefault.swift */; };
 		8AD239CB25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
@@ -160,8 +158,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A94730B25555DB8004BF1CB /* BuildFile in Frameworks */,
-				8A8C2DED25469B340037C62B /* BuildFile in Frameworks */,
 				B85867C957A6C72A1175656B /* Pods_SwiftUI_learning_artifact__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,8 +454,6 @@
 			);
 			name = "SwiftUI-learning-artifact (iOS)";
 			packageProductDependencies = (
-				8A8C2DEC25469B340037C62B /* SwiftPackageProductDependency */,
-				8A94730A25555DB8004BF1CB /* SwiftPackageProductDependency */,
 			);
 			productName = "iOS-learning-artifact (iOS)";
 			productReference = 52F4CAD825122EC800BCBA9F /* SwiftUI-learning-artifact.app */;
@@ -553,8 +547,6 @@
 			);
 			mainGroup = 52F4CACB25122EC500BCBA9F;
 			packageReferences = (
-				8A8C2DEB25469B340037C62B /* RemoteSwiftPackageReference */,
-				8A94730925555DB8004BF1CB /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 52F4CAD925122EC800BCBA9F /* Products */;
 			projectDirPath = "";
@@ -1104,38 +1096,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		8A8C2DEB25469B340037C62B /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.8;
-			};
-		};
-		8A94730925555DB8004BF1CB /* RemoteSwiftPackageReference */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.4.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		8A8C2DEC25469B340037C62B /* SwiftPackageProductDependency */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8A8C2DEB25469B340037C62B /* RemoteSwiftPackageReference */;
-			productName = Lottie;
-		};
-		8A94730A25555DB8004BF1CB /* SwiftPackageProductDependency */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8A94730925555DB8004BF1CB /* RemoteSwiftPackageReference */;
-			productName = Alamofire;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 52F4CACC25122EC500BCBA9F /* Project object */;
 }

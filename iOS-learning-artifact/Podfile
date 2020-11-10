@@ -3,5 +3,7 @@ target 'SwiftUI-learning-artifact (iOS)' do
     use_frameworks!
     
 pod 'ObjectMapper'
+pod 'lottie-ios'
+pod 'Alamofire', '~> 5.2'
 
 end
