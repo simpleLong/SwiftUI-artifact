@@ -71,17 +71,17 @@
 		8A8C2DE4254686AA0037C62B /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A8C2DE1254686AA0037C62B /* loading.json */; };
 		8A8C2DE5254686AA0037C62B /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A8C2DE2254686AA0037C62B /* success.json */; };
 		8A8C2DE6254686AA0037C62B /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A8C2DE2254686AA0037C62B /* success.json */; };
-		8A8C2DED25469B340037C62B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8A8C2DEC25469B340037C62B /* Lottie */; };
+		8A8C2DED25469B340037C62B /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8A8C2DEC25469B340037C62B /* SwiftPackageProductDependency */; };
 		8A8C2DF725469DAC0037C62B /* LoginSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DF625469DAC0037C62B /* LoginSuccessView.swift */; };
 		8A8C2DF825469DAC0037C62B /* LoginSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DF625469DAC0037C62B /* LoginSuccessView.swift */; };
 		8A8C2DFE25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
 		8A8C2DFF25469DE10037C62B /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8C2DFD25469DE10037C62B /* BlurView.swift */; };
-		8A94730B25555DB8004BF1CB /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8A94730A25555DB8004BF1CB /* Alamofire */; };
+		8A94730B25555DB8004BF1CB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 8A94730A25555DB8004BF1CB /* SwiftPackageProductDependency */; };
 		8ACA5D662558FA8E00F320FC /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA5D652558FA8E00F320FC /* UserDefault.swift */; };
 		8ACA5D672558FA8E00F320FC /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACA5D652558FA8E00F320FC /* UserDefault.swift */; };
 		8AD239CB25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
 		8AD239CC25551D330018BE43 /* Submission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD239CA25551D330018BE43 /* Submission.swift */; };
-		B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */; };
+		B85867C957A6C72A1175656B /* Pods_SwiftUI_learning_artifact__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769272AC17374EBED7C46A08 /* Pods_SwiftUI_learning_artifact__iOS_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +124,7 @@
 		52F4CB1E2512347000BCBA9F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		52F4CB2125123C5C00BCBA9F /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		6B0FF2DEFD3B2DDE76B1253F /* Pods-iOS-learning-artifact (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-learning-artifact (iOS).release.xcconfig"; path = "Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS).release.xcconfig"; sourceTree = "<group>"; };
+		769272AC17374EBED7C46A08 /* Pods_SwiftUI_learning_artifact__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUI_learning_artifact__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A0828972533ED9500DAC0A4 /* QuestionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionRow.swift; sourceTree = "<group>"; };
 		8A496FB325541B670077A80F /* QuestionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionDetail.swift; sourceTree = "<group>"; };
 		8A5D703B2532FD75009F2A32 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
@@ -150,7 +151,8 @@
 		8A8C2DFD25469DE10037C62B /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		8ACA5D652558FA8E00F320FC /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		8AD239CA25551D330018BE43 /* Submission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Submission.swift; sourceTree = "<group>"; };
-		BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_learning_artifact__iOS_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0E33BAD58924C59EA74032B /* Pods-SwiftUI-learning-artifact (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUI-learning-artifact (iOS).debug.xcconfig"; path = "Target Support Files/Pods-SwiftUI-learning-artifact (iOS)/Pods-SwiftUI-learning-artifact (iOS).debug.xcconfig"; sourceTree = "<group>"; };
+		F094E8E17C5248AD10753BF1 /* Pods-SwiftUI-learning-artifact (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftUI-learning-artifact (iOS).release.xcconfig"; path = "Target Support Files/Pods-SwiftUI-learning-artifact (iOS)/Pods-SwiftUI-learning-artifact (iOS).release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,9 +160,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A94730B25555DB8004BF1CB /* Alamofire in Frameworks */,
-				B3396344B828A12E4024EC51 /* Pods_iOS_learning_artifact__iOS_.framework in Frameworks */,
-				8A8C2DED25469B340037C62B /* Lottie in Frameworks */,
+				8A94730B25555DB8004BF1CB /* BuildFile in Frameworks */,
+				8A8C2DED25469B340037C62B /* BuildFile in Frameworks */,
+				B85867C957A6C72A1175656B /* Pods_SwiftUI_learning_artifact__iOS_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +193,7 @@
 		28B634A234168812496E8F4A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BB950A73BE1B9A9EAECA79AE /* Pods_iOS_learning_artifact__iOS_.framework */,
+				769272AC17374EBED7C46A08 /* Pods_SwiftUI_learning_artifact__iOS_.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -431,6 +433,8 @@
 			children = (
 				4A5466DDDF5AA0A63A538047 /* Pods-iOS-learning-artifact (iOS).debug.xcconfig */,
 				6B0FF2DEFD3B2DDE76B1253F /* Pods-iOS-learning-artifact (iOS).release.xcconfig */,
+				D0E33BAD58924C59EA74032B /* Pods-SwiftUI-learning-artifact (iOS).debug.xcconfig */,
+				F094E8E17C5248AD10753BF1 /* Pods-SwiftUI-learning-artifact (iOS).release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -454,8 +458,8 @@
 			);
 			name = "SwiftUI-learning-artifact (iOS)";
 			packageProductDependencies = (
-				8A8C2DEC25469B340037C62B /* Lottie */,
-				8A94730A25555DB8004BF1CB /* Alamofire */,
+				8A8C2DEC25469B340037C62B /* SwiftPackageProductDependency */,
+				8A94730A25555DB8004BF1CB /* SwiftPackageProductDependency */,
 			);
 			productName = "iOS-learning-artifact (iOS)";
 			productReference = 52F4CAD825122EC800BCBA9F /* SwiftUI-learning-artifact.app */;
@@ -549,8 +553,8 @@
 			);
 			mainGroup = 52F4CACB25122EC500BCBA9F;
 			packageReferences = (
-				8A8C2DEB25469B340037C62B /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				8A94730925555DB8004BF1CB /* XCRemoteSwiftPackageReference "Alamofire" */,
+				8A8C2DEB25469B340037C62B /* RemoteSwiftPackageReference */,
+				8A94730925555DB8004BF1CB /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 52F4CAD925122EC800BCBA9F /* Products */;
 			projectDirPath = "";
@@ -623,7 +627,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOS-learning-artifact (iOS)-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SwiftUI-learning-artifact (iOS)-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -636,15 +640,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftUI-learning-artifact (iOS)/Pods-SwiftUI-learning-artifact (iOS)-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftUI-learning-artifact (iOS)/Pods-SwiftUI-learning-artifact (iOS)-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOS-learning-artifact (iOS)/Pods-iOS-learning-artifact (iOS)-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftUI-learning-artifact (iOS)/Pods-SwiftUI-learning-artifact (iOS)-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -867,7 +871,7 @@
 		};
 		52F4CB0325122EC800BCBA9F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4A5466DDDF5AA0A63A538047 /* Pods-iOS-learning-artifact (iOS).debug.xcconfig */;
+			baseConfigurationReference = D0E33BAD58924C59EA74032B /* Pods-SwiftUI-learning-artifact (iOS).debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -891,7 +895,7 @@
 		};
 		52F4CB0425122EC800BCBA9F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6B0FF2DEFD3B2DDE76B1253F /* Pods-iOS-learning-artifact (iOS).release.xcconfig */;
+			baseConfigurationReference = F094E8E17C5248AD10753BF1 /* Pods-SwiftUI-learning-artifact (iOS).release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1102,7 +1106,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8A8C2DEB25469B340037C62B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		8A8C2DEB25469B340037C62B /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -1110,7 +1114,7 @@
 				minimumVersion = 3.1.8;
 			};
 		};
-		8A94730925555DB8004BF1CB /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		8A94730925555DB8004BF1CB /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -1121,14 +1125,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8A8C2DEC25469B340037C62B /* Lottie */ = {
+		8A8C2DEC25469B340037C62B /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8A8C2DEB25469B340037C62B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 8A8C2DEB25469B340037C62B /* RemoteSwiftPackageReference */;
 			productName = Lottie;
 		};
-		8A94730A25555DB8004BF1CB /* Alamofire */ = {
+		8A94730A25555DB8004BF1CB /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8A94730925555DB8004BF1CB /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 8A94730925555DB8004BF1CB /* RemoteSwiftPackageReference */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */

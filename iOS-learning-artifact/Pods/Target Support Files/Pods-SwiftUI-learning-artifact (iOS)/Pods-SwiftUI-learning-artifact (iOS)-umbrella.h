@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_iOS_learning_artifact__iOS_VersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_iOS_learning_artifact__iOS_VersionString[];
+FOUNDATION_EXPORT double Pods_SwiftUI_learning_artifact__iOS_VersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_SwiftUI_learning_artifact__iOS_VersionString[];
 

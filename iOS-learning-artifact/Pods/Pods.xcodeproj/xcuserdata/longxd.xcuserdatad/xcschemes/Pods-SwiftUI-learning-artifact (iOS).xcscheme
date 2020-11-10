@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "801070EB3F0396A77D30931AB55CCA17"
-               BuildableName = "Pods_iOS_learning_artifact__iOS_.framework"
-               BlueprintName = "Pods-iOS-learning-artifact (iOS)"
+               BlueprintIdentifier = "EC76574CA30A2B65AF58B3479359C54D"
+               BuildableName = "Pods_SwiftUI_learning_artifact__iOS_.framework"
+               BlueprintName = "Pods-SwiftUI-learning-artifact (iOS)"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

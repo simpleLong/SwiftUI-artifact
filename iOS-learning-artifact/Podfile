@@ -1,4 +1,4 @@
-target 'iOS-learning-artifact (iOS)' do
+target 'SwiftUI-learning-artifact (iOS)' do
 
     use_frameworks!
     
