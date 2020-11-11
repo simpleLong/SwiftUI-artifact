@@ -40,6 +40,7 @@ struct Section: Identifiable {
     var show :Bool = false
     var topicTag :String
     
+    
 }
 struct SectionView: View {
     var section: Section

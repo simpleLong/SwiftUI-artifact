@@ -9,15 +9,15 @@ import SwiftUI
 
 
 struct LoginView: View {
-    @State var email = ""
+    @State var account = ""
     @State var password = ""
     @State var isFocused = false
     @State var showAlert = false
-    @State var alertMessage = "Something went wrong."
+    @State var alertMessage = "账号密码错误."
     @State var isLoading = false
     @State var isSuccessful = false
     @EnvironmentObject var user: UserStore
-    var updateQuestionsBlock :  ([Question],[Section]) -> ()
+    var updateQuestionsBlock :  (Bool) -> ()
     
     
     
@@ -26,34 +26,33 @@ struct LoginView: View {
         self.isFocused = false
         self.isLoading = true
         
-        Api().login(loginParams: ["account":email,"password":password]) { (questions, sections) in
-            if updateQuestionsBlock != nil {
-                updateQuestionsBlock(questions,sections)
-            }
-            self.isLoading = false
+        Api().login(account: account, password: password) { isLoginSuccess in
 
-            if questions.count == 0 {
-               // self.alertMessage = error?.localizedDescription ?? ""
-                self.showAlert = true
-            } else {
-                self.isSuccessful = true
-                self.user.isLogged = true
-                UserDefaults.standard.set(true, forKey: "isLogged")
+            DispatchQueue.main.async {
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.email = ""
-                    self.password = ""
-                    self.isSuccessful = false
-                    self.user.showLogin = false
+                if isLoginSuccess == false {
+                   
+                    self.showAlert = true
+                } else {
+
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self.user.isLogged = true
+
+                        CustomUserDefaults.account = account
+                        updateQuestionsBlock(isLoginSuccess)
+                        self.isLoading = false
+                        self.isSuccessful = true
+
+                        self.account = ""
+                        self.password = ""
+                        self.isSuccessful = false
+                        self.user.showLogin = false
+                    }
                 }
             }
+
         }
-        
-
-        
-//        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-
-//        }
     }
     
     func hideKeyboard() {
@@ -71,7 +70,7 @@ struct LoginView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 
                 CoverView()
-                    .offset(y: isFocused ? -150 : 0)
+                    .offset(y: isFocused ? -90 : 0)
                 
                 VStack {
                     HStack {
@@ -83,10 +82,9 @@ struct LoginView: View {
                             .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
                             .padding(.leading)
                         
-                        TextField("Your Email".uppercased(), text: $email)
+                        TextField("Your Account".uppercased(), text: $account)
                             .keyboardType(.emailAddress)
                             .font(.subheadline)
-        //                    .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.leading)
                             .frame(height: 44)
                             .onTapGesture {
@@ -104,11 +102,11 @@ struct LoginView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 5)
                             .padding(.leading)
+                            
                         
                         SecureField("Password".uppercased(), text: $password)
                             .keyboardType(.default)
                             .font(.subheadline)
-                            //                    .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding(.leading)
                             .frame(height: 44)
                             .onTapGesture {
@@ -123,7 +121,7 @@ struct LoginView: View {
                 .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 20)
                 .padding(.horizontal)
                 .offset(y: 460)
-                .offset(y: isFocused ? -150 : 0)
+                .offset(y: isFocused ? -190 : 0)
                 
                 HStack {
                     Text("Forgot password?")
@@ -169,10 +167,9 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(updateQuestionsBlock: { ([Question], [Section])  in
+        LoginView(updateQuestionsBlock: { isSuccess  in
             
         })
-//        .previewDevice("iPad Air 2")
     }
 }
 
@@ -214,7 +211,7 @@ struct CoverView: View {
                     .rotationEffect(Angle(degrees: show ? 360+90 : 90))
                     .blendMode(.plusDarker)
                     .animation(Animation.linear(duration: 30).repeatForever(autoreverses: false))
-//                    .animation(nil)
+
                     .onAppear { self.show = true }
                 
                 Image(uiImage: #imageLiteral(resourceName: "star1"))
@@ -243,16 +240,10 @@ struct CoverView: View {
                     .rotationEffect(Angle(degrees: show ? 360 : 0), anchor: .center)
                     .blendMode(.overlay)
                     .animation(Animation.linear(duration: 60).repeatForever(autoreverses: false))
-//                    .animation(nil)
+
             }
         )
-//            .background(
-//                Image(uiImage: #imageLiteral(resourceName: "outerspace"))
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fill)
-//                    .offset(x: viewState.width/25, y: viewState.height/25)
-//                , alignment: .bottom
-//        )
+
         .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.0008350018761, green: 0.1427796483, blue: 0.4610896707, alpha: 1)), Color(#colorLiteral(red: 0.04084359854, green: 0.6312003732, blue: 0.9676688313, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .scaleEffect(isDragging ? 0.9 : 1)
